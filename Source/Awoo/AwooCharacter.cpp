@@ -374,7 +374,7 @@ bool AAwooCharacter::Trace(
 	// We can use World->DebugDrawTraceTag to tell Unreal to draw debug lines for our trace
 	// (remove these lines to remove the debug - or better create a debug switch!)
 	const FName TraceTag("MyTraceTag");
-	World->DebugDrawTraceTag = TraceTag;
+	/*World->DebugDrawTraceTag = TraceTag;*/
 	TraceParams.TraceTag = TraceTag;
 
 
@@ -456,5 +456,17 @@ void AAwooCharacter::ProcessTraceHit(FHitResult& HitOut)
 	{
 		//UE_LOG(LogClass, Warning, TEXT("Actor is NOT Interactable!"));
 		//ClearPickupInfo();
+	}
+}
+
+void AAwooCharacter::Tick(float DeltaTime) 
+{ 
+	Super::Tick(DeltaTime); 
+
+	health -= healthDrop;
+
+	if (health <= 0)
+	{
+		GameOverEvent.Broadcast(0);
 	}
 }

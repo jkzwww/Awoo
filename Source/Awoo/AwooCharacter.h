@@ -17,6 +17,9 @@ class UMotionControllerComponent;
 class UAnimMontage;
 class USoundBase;
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~event dispatcher~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMyEventDispatcher, bool, isWinning);
+
 UCLASS(config=Game)
 class AAwooCharacter : public ACharacter
 {
@@ -152,13 +155,7 @@ public:
 	/** Returns FirstPersonCameraComponent subobject **/
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
 
-	//declare overlap begin function
-	UFUNCTION()
-		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-	
-	//declare overlap end function
-	UFUNCTION()
-		void OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~custom variables~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	//character stats
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
@@ -170,9 +167,29 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
 		float hydration = 100.0f;
 
+	//character stats droprate
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CharSetting")
+		float healthDrop = 1;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CharSetting")
+		float hungerDrop = 0.4;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CharSetting")
+		float hydroDrop = 0.5;
+
 	//message to display when pickup / win / lose
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Display")
 		FString MessageString= FString(TEXT(""));
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~function declare~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	//declare overlap begin function
+	UFUNCTION()
+		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	//declare overlap end function
+	UFUNCTION()
+		void OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 	//trace functions declare
 	bool Trace(
@@ -189,5 +206,12 @@ public:
 		void CallMyTrace();
 
 	void ProcessTraceHit(FHitResult& HitOut);
+
+	virtual void Tick(float DeltaTime) override;
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~event~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	UPROPERTY(BlueprintAssignable, Category = "GameState")
+		FMyEventDispatcher GameOverEvent;
 };
 
