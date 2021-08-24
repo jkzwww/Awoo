@@ -4,6 +4,7 @@
 
 #include "Components/CapsuleComponent.h"
 #include "Interactable.h"
+#include "Item.h"
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
@@ -180,6 +181,12 @@ public:
 	//message to display when pickup / win / lose
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Display")
 		FString MessageString= FString(TEXT(""));
+
+	//item interacting with
+	AItem* InteractItem;
+
+	//inventory
+	TArray <AItem*> myInventory;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~function declare~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

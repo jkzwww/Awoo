@@ -450,7 +450,7 @@ void AAwooCharacter::ProcessTraceHit(FHitResult& HitOut)
 {
 	if (HitOut.GetActor()->GetClass()->ImplementsInterface(UInteractable::StaticClass()))
 	{
-		//IInteractable::Execute_Interact(HitOut.GetActor(), nullptr);
+		IInteractable::Execute_Interact(HitOut.GetActor(), this);
 	}
 	else
 	{

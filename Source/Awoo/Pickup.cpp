@@ -49,7 +49,7 @@ void APickup::Interact_Implementation(AActor* target)
 		{
 		case 0://med
 			//increase character health if not full
-			gameChar->health += 20;
+			gameChar->health += BoostValue;
 
 			if (gameChar->health > 100) { gameChar->health = 100; }
 
@@ -59,7 +59,7 @@ void APickup::Interact_Implementation(AActor* target)
 
 		case 1://food
 			//increase character hunger if not full
-			gameChar->hunger += 20;
+			gameChar->hunger += BoostValue;
 
 			if (gameChar->hunger > 100) { gameChar->hunger = 100; }
 
@@ -68,7 +68,7 @@ void APickup::Interact_Implementation(AActor* target)
 			break;
 		case 2://water
 			//increase character hydration if not full
-			gameChar->hydration += 20;
+			gameChar->hydration += BoostValue;
 
 			if (gameChar->hydration > 100) { gameChar->hydration = 100; }
 
