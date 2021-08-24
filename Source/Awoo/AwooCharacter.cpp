@@ -318,7 +318,7 @@ void AAwooCharacter::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, c
 {
 	if (OtherActor && (OtherActor != this) && OtherComp)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Overlap Begin"));
+		/*GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Overlap Begin"));*/
 
 		//implement interface
 		if (OtherActor->GetClass()->ImplementsInterface(UInteractable::StaticClass()))
@@ -332,8 +332,129 @@ void AAwooCharacter::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, c
 
 void AAwooCharacter::OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	if (OtherActor && (OtherActor != this) && OtherComp)
+	/*if (OtherActor && (OtherActor != this) && OtherComp)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Overlap End"));
+	}*/
+
+}
+
+
+//perform trace called by callmytrace which sets up parameters
+bool AAwooCharacter::Trace(
+	UWorld* World,
+	TArray<AActor*>& ActorsToIgnore,
+	const FVector& Start,
+	const FVector& End,
+	FHitResult& HitOut,
+	ECollisionChannel CollisionChannel = ECC_Pawn,
+	bool ReturnPhysMat = false
+) {
+
+	// The World parameter refers to our game world (map/level) 
+	// If there is no World, abort
+	if (!World)
+	{
+		return false;
+	}
+
+	// Set up our TraceParams object
+	FCollisionQueryParams TraceParams(FName(TEXT("My Trace")), true, ActorsToIgnore[0]);
+
+	// Should we simple or complex collision?
+	TraceParams.bTraceComplex = true;
+
+	// We don't need Physics materials 
+	TraceParams.bReturnPhysicalMaterial = ReturnPhysMat;
+
+	// Add our ActorsToIgnore
+	TraceParams.AddIgnoredActors(ActorsToIgnore);
+
+	// When we're debugging it is really useful to see where our trace is in the world
+	// We can use World->DebugDrawTraceTag to tell Unreal to draw debug lines for our trace
+	// (remove these lines to remove the debug - or better create a debug switch!)
+	const FName TraceTag("MyTraceTag");
+	World->DebugDrawTraceTag = TraceTag;
+	TraceParams.TraceTag = TraceTag;
+
+
+	// Force clear the HitData which contains our results
+	HitOut = FHitResult(ForceInit);
+
+	// Perform our trace
+	World->LineTraceSingleByChannel
+	(
+		HitOut,		//result
+		Start,	//start
+		End, //end
+		CollisionChannel, //collision channel
+		TraceParams
+	);
+
+	// If we hit an actor, return true
+	return (HitOut.GetActor() != NULL);
+}
+
+
+//calls trace
+void AAwooCharacter::CallMyTrace()
+{
+	// Get the location of the camera (where we are looking from) and the direction we are looking in
+	const FVector Start = FirstPersonCameraComponent->GetComponentLocation();
+	const FVector ForwardVector = FirstPersonCameraComponent->GetForwardVector();
+
+	// How for in front of our character do we want our trace to extend?
+	// ForwardVector is a unit vector, so we multiply by the desired distance
+	const FVector End = Start + ForwardVector * 1256;
+
+	// Force clear the HitData which contains our results
+	FHitResult HitData(ForceInit);
+
+	// What Actors do we want our trace to Ignore?
+	TArray<AActor*> ActorsToIgnore;
+
+	//Ignore the player character - so you don't hit yourself!
+	ActorsToIgnore.Add(this);
+
+	// Call our Trace() function with the paramaters we have set up
+	// If it Hits anything
+	if (Trace(GetWorld(), ActorsToIgnore, Start, End, HitData, ECC_Visibility, false))
+	{
+		// Process our HitData
+		if (HitData.GetActor())
+		{
+
+			UE_LOG(LogClass, Warning, TEXT("This a testing statement. %s"), *HitData.GetActor()->GetName());
+			ProcessTraceHit(HitData);
+
+		}
+		else
+		{
+			// The trace did not return an Actor
+			// An error has occurred
+			// Record a message in the error log
+		}
+	}
+	else
+	{
+		// We did not hit an Actor
+		//ClearPickupInfo();
+
+	}
+
+}
+
+
+//process trace hit when interactable item is detected
+void AAwooCharacter::ProcessTraceHit(FHitResult& HitOut)
+{
+	if (HitOut.GetActor()->GetClass()->ImplementsInterface(UInteractable::StaticClass()))
+	{
+		//IInteractable::Execute_Interact(HitOut.GetActor(), nullptr);
+	}
+	else
+	{
+		//UE_LOG(LogClass, Warning, TEXT("Actor is NOT Interactable!"));
+		//ClearPickupInfo();
 	}
 }

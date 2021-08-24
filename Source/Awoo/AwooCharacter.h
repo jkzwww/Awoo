@@ -170,7 +170,24 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
 		float hydration = 100.0f;
 
+	//message to display when pickup / win / lose
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Display")
 		FString MessageString= FString(TEXT(""));
+
+	//trace functions declare
+	bool Trace(
+		UWorld* World,
+		TArray<AActor*>& ActorsToIgnore,
+		const FVector& Start,
+		const FVector& End,
+		FHitResult& HitOut,
+		ECollisionChannel CollisionChannel,
+		bool ReturnPhysMat
+	);
+
+	UFUNCTION(BlueprintCallable,Category = "Tracing")
+		void CallMyTrace();
+
+	void ProcessTraceHit(FHitResult& HitOut);
 };
 

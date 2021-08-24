@@ -38,7 +38,7 @@ void APickup::Tick(float DeltaTime)
 void APickup::Interact_Implementation(AActor* target)
 {
 	//debug message
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Picked Up"));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Picked Up"));
 
 	//check if picked up by character
 	AAwooCharacter* gameChar = Cast<AAwooCharacter>(target);
