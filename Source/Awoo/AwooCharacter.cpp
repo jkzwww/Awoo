@@ -451,6 +451,14 @@ void AAwooCharacter::ProcessTraceHit(FHitResult& HitOut)
 	if (HitOut.GetActor()->GetClass()->ImplementsInterface(UInteractable::StaticClass()))
 	{
 		IInteractable::Execute_Interact(HitOut.GetActor(), this);
+
+		AItem* myItem = Cast<AItem>(HitOut.GetActor());
+
+		if (myItem)
+		{
+			InteractItem = myItem;
+		}
+		
 	}
 	else
 	{
@@ -463,8 +471,15 @@ void AAwooCharacter::Tick(float DeltaTime)
 { 
 	Super::Tick(DeltaTime); 
 
-	health -= healthDrop;
+	hunger -= hungerDrop;
 
+	hydration -= hydroDrop;
+
+	if (hunger <= 0 || hydration <= 0)
+	{
+		health -= healthDrop;
+	}
+	
 	if (health <= 0)
 	{
 		GameOverEvent.Broadcast(0);

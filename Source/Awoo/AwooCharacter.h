@@ -170,13 +170,13 @@ public:
 
 	//character stats droprate
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CharSetting")
-		float healthDrop = 1;
+		float healthDrop = 0.001;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CharSetting")
-		float hungerDrop = 0.4;
+		float hungerDrop = 0.04;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CharSetting")
-		float hydroDrop = 0.5;
+		float hydroDrop = 0.05;
 
 	//message to display when pickup / win / lose
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Display")

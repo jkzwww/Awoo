@@ -3,12 +3,12 @@
 #pragma once
 
 #include "Interactable.h"
-#include "AwooCharacter.h"
+//#include "AwooCharacter.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Item.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FItemEventDispatcher, FString, name, FString, desc, FString, howTo);
+//DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FItemEventDispatcher, FString, name, FString, desc, FString, howTo);
 
 UCLASS()
 class AWOO_API AItem : public AActor, public IInteractable
@@ -46,8 +46,8 @@ public:
 
 	virtual void Interact_Implementation(AActor* target) override;
 
-	UPROPERTY(BlueprintAssignable, Category = "Display")
-		FItemEventDispatcher ShowInfoEvent;
+	//UPROPERTY(BlueprintAssignable, Category = "Display")
+	//	FItemEventDispatcher ShowInfoEvent;
 
 	UFUNCTION(BlueprintCallable, Category = "ItemUsage")
 		void CollectItem();

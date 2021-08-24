@@ -36,9 +36,9 @@ void AItem::Interact_Implementation(AActor* target)
 {
 
 	//show info on HUD by broadcasting showInfo event
-	ShowInfoEvent.Broadcast(ItemName, ItemDesc, ItemHowTo);
+	//ShowInfoEvent.Broadcast(ItemName, ItemDesc, ItemHowTo);
 
-	//add pointer to item to interactingitem in character
+
 
 }
 
