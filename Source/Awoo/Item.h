@@ -23,13 +23,13 @@ public:
 		class UStaticMeshComponent* BaseMesh;
 
 	//item name, description, use hint
-	UPROPERTY(EditAnywhere,Category = "info")
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = "info")
 		FString ItemName;
 
-	UPROPERTY(EditAnywhere, Category = "info")
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "info")
 		FString ItemDesc;
 	
-	UPROPERTY(EditAnywhere, Category = "info")
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "info")
 		FString ItemHowTo;
 
 protected:
