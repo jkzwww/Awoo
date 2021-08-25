@@ -35,8 +35,7 @@ void AItem::Tick(float DeltaTime)
 void AItem::Interact_Implementation(AActor* target)
 {
 
-	//show info on HUD by broadcasting showInfo event
-	//ShowInfoEvent.Broadcast(ItemName, ItemDesc, ItemHowTo);
+	
 
 
 
@@ -59,6 +58,10 @@ void AItem::CollectItem()
 void AItem::UseItem()
 {
 	//to be override
+
+	//broadcast item event eg.unlock 
+
+	
 }
 
 

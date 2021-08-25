@@ -149,6 +149,14 @@ void AAwooCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 	PlayerInputComponent->BindAxis("TurnRate", this, &AAwooCharacter::TurnAtRate);
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis("LookUpRate", this, &AAwooCharacter::LookUpAtRate);
+
+
+	//Bind pause 
+	PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &AAwooCharacter::pauseGame);
+
+	//bind collect
+	PlayerInputComponent->BindAction("Collect", IE_Pressed, this, &AAwooCharacter::Collect);
+
 }
 
 void AAwooCharacter::OnFire()
@@ -465,6 +473,7 @@ void AAwooCharacter::ProcessTraceHit(FHitResult& HitOut)
 	{
 		//UE_LOG(LogClass, Warning, TEXT("Actor is NOT Interactable!"));
 		//ClearPickupInfo();
+		InteractItem = nullptr;
 	}
 }
 
@@ -472,10 +481,16 @@ void AAwooCharacter::Tick(float DeltaTime)
 { 
 	Super::Tick(DeltaTime); 
 
-	hunger -= hungerDrop;
-
-	hydration -= hydroDrop;
-
+	if (hunger > 0)
+	{
+		hunger -= hungerDrop;
+	}
+	
+	if (hydration > 0)
+	{
+		hydration -= hydroDrop;
+	}
+	
 	if (hunger <= 0 || hydration <= 0)
 	{
 		health -= healthDrop;
@@ -485,4 +500,36 @@ void AAwooCharacter::Tick(float DeltaTime)
 	{
 		GameOverEvent.Broadcast(0);
 	}
+}
+
+
+void AAwooCharacter::Collect()
+{
+
+	if (InteractItem)
+	{
+		InteractItem->CollectItem();
+
+		//add to inventory
+
+		//update HUD
+	}
+}
+
+
+void AAwooCharacter::UseEquipItem()
+{
+	//check item equipped
+
+	//call item UseItem function to broadcast event
+
+	//remove from inventory
+
+	
+}
+
+
+void AAwooCharacter::pauseGame()
+{
+	PausePressed = true;
 }

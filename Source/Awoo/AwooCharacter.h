@@ -159,6 +159,11 @@ public:
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~custom variables~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+	//gamestates
+	//track pause game event
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gamestats)
+		bool PausePressed = false;
+
 	//character stats
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
 		float health = 100.0f;
@@ -186,10 +191,17 @@ public:
 	//item interacting with
 	AItem* InteractItem;
 
+	//item equipped
+	AItem* ItemEquipped;
+	
 	//inventory
-	TArray <AItem*> myInventory;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Display")
+		TArray <AItem*> myInventory;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~function declare~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	//game state variables mutator
+	void pauseGame();
 
 	//declare overlap begin function
 	UFUNCTION()
@@ -198,6 +210,7 @@ public:
 	//declare overlap end function
 	UFUNCTION()
 		void OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
 
 	//trace functions declare
 	bool Trace(
@@ -215,7 +228,15 @@ public:
 
 	void ProcessTraceHit(FHitResult& HitOut);
 
+	
+	//tick
 	virtual void Tick(float DeltaTime) override;
+
+
+	//item related functions
+	void Collect();
+
+	void UseEquipItem();
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~event~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
