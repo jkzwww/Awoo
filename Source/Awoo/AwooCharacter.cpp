@@ -457,6 +457,7 @@ void AAwooCharacter::ProcessTraceHit(FHitResult& HitOut)
 		if (myItem)
 		{
 			InteractItem = myItem;
+			ShowInfoEvent.Broadcast(myItem->ItemName, myItem->ItemDesc, myItem->ItemHowTo);
 		}
 		
 	}

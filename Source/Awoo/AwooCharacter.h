@@ -20,6 +20,7 @@ class USoundBase;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~event dispatcher~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMyEventDispatcher, bool, isWinning);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FInfoEventDispatcher, FString, name,FString,desc,FString,howTo);
 
 UCLASS(config=Game)
 class AAwooCharacter : public ACharacter
@@ -220,5 +221,8 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category = "GameState")
 		FMyEventDispatcher GameOverEvent;
+
+	UPROPERTY(BlueprintAssignable, Category = "Tracing")
+		FInfoEventDispatcher ShowInfoEvent;
 };
 
