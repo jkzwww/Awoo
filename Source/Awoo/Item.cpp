@@ -35,15 +35,8 @@ void AItem::Tick(float DeltaTime)
 void AItem::Interact_Implementation(AActor* target)
 {
 
+	//if collected(interact)
 	
-
-
-
-}
-
-
-void AItem::CollectItem()
-{
 	// Hides visible components
 	SetActorHiddenInGame(true);
 
@@ -52,7 +45,13 @@ void AItem::CollectItem()
 
 	// Stops the Actor from ticking
 	//SetActorTickEnabled(false);
+	
+	
+
+
+
 }
+
 
 
 void AItem::UseItem()

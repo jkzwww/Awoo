@@ -331,9 +331,13 @@ void AAwooCharacter::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, c
 		//implement interface
 		if (OtherActor->GetClass()->ImplementsInterface(UInteractable::StaticClass()))
 		{
-			IInteractable::Execute_Interact(OtherActor, this);
 
-
+			//as item do not interact until button pressed
+			if (!Cast<AItem>(OtherActor))
+			{
+				IInteractable::Execute_Interact(OtherActor, this);
+			}
+			
 		}
 	}
 }
@@ -458,7 +462,8 @@ void AAwooCharacter::ProcessTraceHit(FHitResult& HitOut)
 {
 	if (HitOut.GetActor()->GetClass()->ImplementsInterface(UInteractable::StaticClass()))
 	{
-		IInteractable::Execute_Interact(HitOut.GetActor(), this);
+		//interaction occurs on key pressed
+		//IInteractable::Execute_Interact(HitOut.GetActor(), this);
 
 		AItem* myItem = Cast<AItem>(HitOut.GetActor());
 
@@ -508,10 +513,12 @@ void AAwooCharacter::Collect()
 
 	if (InteractItem)
 	{
-		InteractItem->CollectItem();
+
+		IInteractable::Execute_Interact(InteractItem, this);
 
 		//add to inventory
-
+		myInventory.Add(&(*InteractItem));
+		
 		//update HUD
 	}
 }

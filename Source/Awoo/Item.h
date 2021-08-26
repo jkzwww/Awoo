@@ -8,8 +8,6 @@
 #include "GameFramework/Actor.h"
 #include "Item.generated.h"
 
-//DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FItemEventDispatcher, FString, name, FString, desc, FString, howTo);
-
 UCLASS()
 class AWOO_API AItem : public AActor, public IInteractable
 {
@@ -45,12 +43,6 @@ public:
 		void Interact(AActor* target);
 
 	virtual void Interact_Implementation(AActor* target) override;
-
-	//UPROPERTY(BlueprintAssignable, Category = "Display")
-	//	FItemEventDispatcher ShowInfoEvent;
-
-	UFUNCTION(BlueprintCallable, Category = "ItemUsage")
-		void CollectItem();
 
 	UFUNCTION(BlueprintCallable,Category = "ItemUsage")
 		void UseItem();
