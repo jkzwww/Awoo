@@ -14,6 +14,7 @@
 
 DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
 
+
 //////////////////////////////////////////////////////////////////////////
 // AAwooCharacter
 
@@ -331,8 +332,8 @@ void AAwooCharacter::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, c
 		//implement interface
 		if (OtherActor->GetClass()->ImplementsInterface(UInteractable::StaticClass()))
 		{
-
-			//as item do not interact until button pressed
+			//auto collect if pickup
+			//do not collect until button pressed if item
 			if (!Cast<AItem>(OtherActor))
 			{
 				IInteractable::Execute_Interact(OtherActor, this);

@@ -34,9 +34,14 @@ public:
 	UPROPERTY(EditAnywhere)
 		float MaxValue;
 
+	UFUNCTION(BlueprintCallable)
+		void Consume();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	AAwooCharacter* gameChar = nullptr;
 
 public:	
 	// Called every frame

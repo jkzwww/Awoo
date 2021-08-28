@@ -41,51 +41,60 @@ void APickup::Interact_Implementation(AActor* target)
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Picked Up"));
 
 	//check if picked up by character
-	AAwooCharacter* gameChar = Cast<AAwooCharacter>(target);
+	gameChar = Cast<AAwooCharacter>(target);
 
 	if (gameChar)
 	{
-		switch (BoostType)
-		{
-		case 0://med
-			//increase character health if not full
-			gameChar->health += BoostValue;
-
-			if (gameChar->health > 100) { gameChar->health = 100; }
-
-			gameChar->MessageString = FString(TEXT("Health boosted!!"));
-
-			break;
-
-		case 1://food
-			//increase character hunger if not full
-			gameChar->hunger += BoostValue;
-
-			if (gameChar->hunger > 100) { gameChar->hunger = 100; }
-
-			gameChar->MessageString = FString(TEXT("Yum yum!!"));
-
-			break;
-		case 2://water
-			//increase character hydration if not full
-			gameChar->hydration += BoostValue;
-
-			if (gameChar->hydration > 100) { gameChar->hydration = 100; }
-
-			gameChar->MessageString = FString(TEXT("Hydration UP!!"));
-
-			break;
-		default:
-			//wrong type
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Pick Up Type Unspecified"));
-		}
-
-
-
-
-		//sound and particle effects
-
-		//disappear as picked up
-		Destroy();
+		gameChar->myPickups.Add(this);
 	}
+
+	//disappear as picked up
+	// Hides visible components
+	SetActorHiddenInGame(true);
+
+	// Disables collision components
+	SetActorEnableCollision(false);
+
+}
+
+
+void APickup::Consume()
+{
+	switch (BoostType)
+	{
+	case 0://med
+		//increase character health if not full
+		gameChar->health += BoostValue;
+
+		if (gameChar->health > 100) { gameChar->health = 100; }
+
+		//gameChar->MessageString = FString(TEXT("Health boosted!!"));
+
+		break;
+
+	case 1://food
+		//increase character hunger if not full
+		gameChar->hunger += BoostValue;
+
+		if (gameChar->hunger > 100) { gameChar->hunger = 100; }
+
+		//gameChar->MessageString = FString(TEXT("Yum yum!!"));
+
+		break;
+	case 2://water
+		//increase character hydration if not full
+		gameChar->hydration += BoostValue;
+
+		if (gameChar->hydration > 100) { gameChar->hydration = 100; }
+
+		//gameChar->MessageString = FString(TEXT("Hydration UP!!"));
+
+		break;
+	default:
+		//wrong type
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Pick Up Type Unspecified"));
+	}
+
+	//sound and particle effects
+	
 }

@@ -22,6 +22,8 @@ class USoundBase;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMyEventDispatcher, bool, isWinning);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FInfoEventDispatcher, FString, name,FString,desc,FString,howTo);
 
+class APickup;
+
 UCLASS(config=Game)
 class AAwooCharacter : public ACharacter
 {
@@ -194,10 +196,13 @@ public:
 	//item equipped
 	AItem* ItemEquipped;
 	
-	//inventory
+	//inventory for items
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Display")
 		TArray <AItem*> myInventory;
 
+	//pickups
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Display")
+		TArray <APickup*> myPickups;
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~function declare~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	//game state variables mutator
