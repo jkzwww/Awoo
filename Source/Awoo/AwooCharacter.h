@@ -253,6 +253,7 @@ public:
 
 	void UseEquipItem();
 
+	void DropItem();
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~event~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	UPROPERTY(BlueprintAssignable, Category = "GameState")

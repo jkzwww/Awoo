@@ -64,7 +64,14 @@ void AItem::UseItem()
 }
 
 
-void AItem::ThrowItem()
+void AItem::DropItem(FVector dropLoc)
 {
-	Destroy();
+	//throw item at player location
+	SetActorLocation(dropLoc);
+
+	// Hides visible components
+	SetActorHiddenInGame(false);
+
+	// Disables collision components
+	SetActorEnableCollision(true);
 }

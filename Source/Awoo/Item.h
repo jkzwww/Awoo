@@ -44,8 +44,8 @@ public:
 	virtual void Interact_Implementation(AActor* target) override;
 
 	UFUNCTION(BlueprintCallable,Category = "ItemUsage")
-		void UseItem();
+	virtual	void UseItem();
 
 	UFUNCTION(BlueprintCallable,Category = "ItemUsage")
-		void ThrowItem();
+		void DropItem(FVector dropLoc);
 };

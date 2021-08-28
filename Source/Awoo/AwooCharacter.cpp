@@ -158,6 +158,11 @@ void AAwooCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 	//bind collect
 	PlayerInputComponent->BindAction("Collect", IE_Pressed, this, &AAwooCharacter::Collect);
 
+	//bind use
+	PlayerInputComponent->BindAction("Use", IE_Pressed, this, &AAwooCharacter::UseEquipItem);
+
+	//bind drop
+	PlayerInputComponent->BindAction("Drop", IE_Pressed, this, &AAwooCharacter::DropItem);
 }
 
 void AAwooCharacter::OnFire()
@@ -528,14 +533,30 @@ void AAwooCharacter::Collect()
 void AAwooCharacter::UseEquipItem()
 {
 	//check item equipped
+	if (ItemEquipped)
+	{
+		//call item UseItem function to broadcast event
 
-	//call item UseItem function to broadcast event
+		//remove from inventory
+		myInventory.RemoveSingle(ItemEquipped);
+	}
 
-	//remove from inventory
-
-	
 }
 
+
+void AAwooCharacter::DropItem()
+{
+	if (ItemEquipped)
+	{
+		ItemEquipped->DropItem(GetActorLocation());
+
+
+
+		//clear equip slot
+		ItemEquipped = nullptr;
+	}
+
+}
 
 void AAwooCharacter::pauseGame()
 {
