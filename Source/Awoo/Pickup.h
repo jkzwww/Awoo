@@ -23,11 +23,11 @@ public:
 		class UStaticMeshComponent* BaseMesh;
 
 	//pick up type
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 		int BoostType;
 
 	//amount of boost effect
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 		float BoostValue;
 
 	//maximum stat value

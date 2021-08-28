@@ -194,7 +194,8 @@ public:
 	AItem* InteractItem;
 
 	//item equipped
-	AItem* ItemEquipped;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Item")
+		AItem* ItemEquipped = nullptr;
 	
 	//inventory for items
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Display")
@@ -202,7 +203,16 @@ public:
 
 	//pickups
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Display")
-		TArray <APickup*> myPickups;
+	 	TArray <APickup*> myPickups;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Pickups")
+		int myMeds;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Pickups")
+		int myFood;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Pickups")
+		int myDrinks;
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~function declare~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	//game state variables mutator

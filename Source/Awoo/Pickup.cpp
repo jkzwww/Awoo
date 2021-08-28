@@ -46,6 +46,20 @@ void APickup::Interact_Implementation(AActor* target)
 	if (gameChar)
 	{
 		gameChar->myPickups.Add(this);
+
+		switch (BoostType)
+		{
+		case 0: gameChar->myMeds++;
+			break;
+
+		case 1: gameChar->myFood++;
+			break;
+
+		case 2:gameChar->myDrinks++;
+			break;
+
+		default: break;
+		}
 	}
 
 	//disappear as picked up
@@ -65,7 +79,7 @@ void APickup::Consume()
 	case 0://med
 		//increase character health if not full
 		gameChar->health += BoostValue;
-
+		gameChar->myMeds--;
 		if (gameChar->health > 100) { gameChar->health = 100; }
 
 		//gameChar->MessageString = FString(TEXT("Health boosted!!"));
@@ -75,7 +89,7 @@ void APickup::Consume()
 	case 1://food
 		//increase character hunger if not full
 		gameChar->hunger += BoostValue;
-
+		gameChar->myFood--;
 		if (gameChar->hunger > 100) { gameChar->hunger = 100; }
 
 		//gameChar->MessageString = FString(TEXT("Yum yum!!"));
@@ -84,7 +98,7 @@ void APickup::Consume()
 	case 2://water
 		//increase character hydration if not full
 		gameChar->hydration += BoostValue;
-
+		gameChar->myDrinks--;
 		if (gameChar->hydration > 100) { gameChar->hydration = 100; }
 
 		//gameChar->MessageString = FString(TEXT("Hydration UP!!"));
@@ -97,4 +111,5 @@ void APickup::Consume()
 
 	//sound and particle effects
 	
+	Destroy();
 }
