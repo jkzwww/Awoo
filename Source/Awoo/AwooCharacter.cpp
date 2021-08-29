@@ -163,6 +163,9 @@ void AAwooCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 
 	//bind drop
 	PlayerInputComponent->BindAction("Drop", IE_Pressed, this, &AAwooCharacter::DropItem);
+
+	//bind equip
+	PlayerInputComponent->BindAction("Equip", IE_Pressed, this, &AAwooCharacter::Equip);
 }
 
 void AAwooCharacter::OnFire()
@@ -519,16 +522,31 @@ void AAwooCharacter::Collect()
 
 	if (InteractItem)
 	{
-
+		//item event when collected
+		//interact item pointer is changed regularly, take item address as pointer instead
 		IInteractable::Execute_Interact(InteractItem, this);
 
 		//add to inventory
 		myInventory.Add(&(*InteractItem));
 		
-		//update HUD
 	}
 }
 
+void AAwooCharacter::Equip()
+{
+	if (InteractItem)
+	{
+		//item event when collected
+		IInteractable::Execute_Interact(InteractItem, this);
+
+		//add to inventory
+		myInventory.Add(&(*InteractItem)); 
+
+		//equip directly
+		ItemEquipped = &(*InteractItem);
+
+	}
+}
 
 void AAwooCharacter::UseEquipItem()
 {

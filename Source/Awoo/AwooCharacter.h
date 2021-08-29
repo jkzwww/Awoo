@@ -251,6 +251,8 @@ public:
 	//item related functions
 	void Collect();
 
+	void Equip();
+
 	void UseEquipItem();
 
 	void DropItem();

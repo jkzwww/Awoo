@@ -15,7 +15,7 @@ AItem::AItem()
 	//test values
 	ItemName = FString(TEXT("Test product"));
 	ItemDesc = FString(TEXT("Nothing useful"));
-	ItemHowTo = FString(TEXT("Press C to collect"));
+	ItemHowTo = FString(TEXT("Press C to collect\nPress E to equip directly"));
 }
 
 // Called when the game starts or when spawned
