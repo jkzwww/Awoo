@@ -548,12 +548,15 @@ void AAwooCharacter::DropItem()
 {
 	if (ItemEquipped)
 	{
-		ItemEquipped->DropItem(GetActorLocation());
+		//drop at somewhere offset to actor
+		ItemEquipped->DropItem(GetActorLocation() + FVector(50,20,0));
 
-
+		//remove from inventory
+		myInventory.RemoveSingle(ItemEquipped);
 
 		//clear equip slot
 		ItemEquipped = nullptr;
+		
 	}
 
 }
