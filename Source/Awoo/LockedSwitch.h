@@ -2,9 +2,9 @@
 
 #pragma once
 
+#include "AwooCharacter.h"
 #include "Interactable.h"
 #include "DoorKey.h"
-#include "AwooCharacter.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "LockedSwitch.generated.h"
@@ -28,6 +28,10 @@ public:
 	//door lock state
 	UPROPERTY(EditAnywhere, Category = "SwitchState")
 		bool isLocked;
+
+	//message to display when checked
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Display")
+		FString LockMessage = FString(TEXT(""));
 
 protected:
 	// Called when the game starts or when spawned

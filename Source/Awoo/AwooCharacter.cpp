@@ -341,7 +341,6 @@ void AAwooCharacter::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, c
 		if (OtherActor->GetClass()->ImplementsInterface(UInteractable::StaticClass()))
 		{
 			//auto collect if pickup
-			//do not collect until button pressed if item
 			if (!Cast<AItem>(OtherActor))
 			{
 				IInteractable::Execute_Interact(OtherActor, this);
@@ -353,13 +352,12 @@ void AAwooCharacter::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, c
 
 void AAwooCharacter::OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	/*if (OtherActor && (OtherActor != this) && OtherComp)
+	if (OtherActor && (OtherActor != this) && OtherComp)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Overlap End"));
-	}*/
+		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Overlap End"));
 
-	//clear message when not near any item
-	//MessageString = FString(TEXT(""));
+	}
+
 
 }
 
@@ -479,10 +477,15 @@ void AAwooCharacter::ProcessTraceHit(FHitResult& HitOut)
 
 		AItem* myItem = Cast<AItem>(HitOut.GetActor());
 
+		//show item info if item is detected
 		if (myItem)
 		{
 			InteractItem = myItem;
 			ShowInfoEvent.Broadcast(myItem->ItemName, myItem->ItemDesc, myItem->ItemHowTo);
+		}
+		else
+		{
+			IInteractable::Execute_Interact(HitOut.GetActor(), this);
 		}
 		
 	}
@@ -491,6 +494,8 @@ void AAwooCharacter::ProcessTraceHit(FHitResult& HitOut)
 		//UE_LOG(LogClass, Warning, TEXT("Actor is NOT Interactable!"));
 		//ClearPickupInfo();
 		InteractItem = nullptr;
+		MessageString = FString(TEXT(""));
+
 	}
 }
 

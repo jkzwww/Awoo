@@ -36,6 +36,7 @@ void ALockedSwitch::Tick(float DeltaTime)
 	//{
 	//	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Switch Open!!"));
 	//}
+
 }
 
 void ALockedSwitch::OnSwitch()
@@ -45,19 +46,19 @@ void ALockedSwitch::OnSwitch()
 
 void ALockedSwitch::Interact_Implementation(AActor* target)
 {
+	if (isLocked)
+	{
+		LockMessage = FString(TEXT("Switch LOCKED"));
+	}
+	else
+	{
+		LockMessage = FString(TEXT("Switch UNLOCKED"));
+	}
+
 	AAwooCharacter* gameChar = Cast<AAwooCharacter>(target);
 
-	//display lock status when player is near
 	if (gameChar)
 	{
-		if (isLocked)
-		{
-			gameChar->MessageString = FString(TEXT("Switch LOCKED"));
-		}
-		else
-		{
-			gameChar->MessageString = FString(TEXT("Switch UNLOCKED"));
-		}
-		
+		gameChar->MessageString = LockMessage;
 	}
 }
