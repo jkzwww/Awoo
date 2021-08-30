@@ -37,5 +37,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	//event handler
-	void OpenDoor();
+	UFUNCTION()
+		void OpenDoor();
 };

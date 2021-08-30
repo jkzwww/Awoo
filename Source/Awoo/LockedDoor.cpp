@@ -15,19 +15,18 @@ ALockedDoor::ALockedDoor()
 	//default values
 	isLocked = true;
 
-	//bind the open door event to my paired key
-	if (myKey)
-	{
-		myKey->UnlockEvent.AddDynamic(this, &ALockedDoor::OpenDoor);
-	}
-
 }
 
 // Called when the game starts or when spawned
 void ALockedDoor::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	if (myKey)
+	{
+		myKey->UnlockEvent.AddDynamic(this, &ALockedDoor::OpenDoor);
+	}
+
 }
 
 // Called every frame
