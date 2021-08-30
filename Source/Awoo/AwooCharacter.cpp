@@ -358,6 +358,9 @@ void AAwooCharacter::OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, cla
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Overlap End"));
 	}*/
 
+	//clear message when not near any item
+	//MessageString = FString(TEXT(""));
+
 }
 
 

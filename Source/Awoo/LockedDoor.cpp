@@ -27,6 +27,8 @@ void ALockedDoor::BeginPlay()
 		myKey->UnlockEvent.AddDynamic(this, &ALockedDoor::OpenDoor);
 	}
 
+	baseZ = BaseMesh->GetComponentLocation().Z;
+
 }
 
 // Called every frame
@@ -34,12 +36,21 @@ void ALockedDoor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+
+	FVector target = BaseMesh->GetComponentLocation();
+
 	if (!isLocked)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Door Open!!"));
-
-
+		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Door Open!!"));
+		target.Z = baseZ + 350.0f;
 	}
+	else
+	{
+		target.Z = baseZ;
+	}
+
+	BaseMesh->SetRelativeLocation(FMath::Lerp(BaseMesh->GetComponentLocation(), target, 0.05f));
+
 }
 
 

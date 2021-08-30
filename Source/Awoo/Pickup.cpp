@@ -63,6 +63,10 @@ void APickup::Interact_Implementation(AActor* target)
 	}
 
 	//disappear as picked up
+
+	//alert player
+	gameChar->MessageString = FString(TEXT("Boost item picked up!\nUse in inventory[I]"));
+
 	// Hides visible components
 	SetActorHiddenInGame(true);
 
