@@ -7,6 +7,8 @@
 #include "Item.h"
 #include "DoorKey.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FKeyEventDispatcher);
+
 UCLASS()
 class AWOO_API ADoorKey : public AItem
 {
@@ -25,4 +27,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void UseItem() override;
+
+	//event dispatcher
+	UPROPERTY(BlueprintAssignable, Category = "KeyUsage")
+		FKeyEventDispatcher UnlockEvent;
 };

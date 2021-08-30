@@ -558,6 +558,9 @@ void AAwooCharacter::UseEquipItem()
 
 		//remove from inventory
 		myInventory.RemoveSingle(ItemEquipped);
+
+		//clear equip slot
+		ItemEquipped = nullptr;
 	}
 
 }

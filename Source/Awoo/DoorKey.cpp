@@ -12,6 +12,8 @@ ADoorKey::ADoorKey()
 	//default name and desc
 	ItemName = FString(TEXT("Key"));
 	ItemDesc = FString(TEXT("An old and rusty key\nmight be useful for a lock somewhere"));
+
+
 }
 
 // Called when the game starts or when spawned
@@ -32,4 +34,8 @@ void ADoorKey::Tick(float DeltaTime)
 void ADoorKey::UseItem()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Key Used!!"));
+
+	//call key event binded to unlock event of door
+	UnlockEvent.Broadcast();
+
 }
