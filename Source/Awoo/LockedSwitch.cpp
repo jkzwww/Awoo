@@ -24,6 +24,7 @@ void ALockedSwitch::BeginPlay()
 	if (myKey)
 	{
 		myKey->UnlockEvent.AddDynamic(this, &ALockedSwitch::OnSwitch);
+		myKey->LockLoc = GetActorLocation();
 	}
 }
 
@@ -42,23 +43,4 @@ void ALockedSwitch::Tick(float DeltaTime)
 void ALockedSwitch::OnSwitch()
 {
 	isLocked = false;
-}
-
-void ALockedSwitch::Interact_Implementation(AActor* target)
-{
-	if (isLocked)
-	{
-		LockMessage = FString(TEXT("Switch LOCKED"));
-	}
-	else
-	{
-		LockMessage = FString(TEXT("Switch UNLOCKED"));
-	}
-
-	AAwooCharacter* gameChar = Cast<AAwooCharacter>(target);
-
-	if (gameChar)
-	{
-		gameChar->MessageString = LockMessage;
-	}
 }

@@ -31,7 +31,10 @@ AAwooCharacter::AAwooCharacter()
 	TriggerCapsule->OnComponentBeginOverlap.AddDynamic(this, &AAwooCharacter::OnOverlapBegin);
 	TriggerCapsule->OnComponentEndOverlap.AddDynamic(this, &AAwooCharacter::OnOverlapEnd);
 
-
+	//default stats value
+	maxHealth = 100;
+	maxHunger = 100;
+	maxHydration = 100;
 
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(55.f, 96.0f);
@@ -117,6 +120,11 @@ void AAwooCharacter::BeginPlay()
 		VR_Gun->SetHiddenInGame(true, true);
 		Mesh1P->SetHiddenInGame(false, true);
 	}
+
+	//reset stats
+	health = maxHealth;
+	hunger = maxHunger;
+	hydration = maxHydration;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -166,6 +174,9 @@ void AAwooCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 
 	//bind equip
 	PlayerInputComponent->BindAction("Equip", IE_Pressed, this, &AAwooCharacter::Equip);
+
+	//bind consume
+	PlayerInputComponent->BindAction("Consume", IE_Pressed, this, &AAwooCharacter::Consume);
 }
 
 void AAwooCharacter::OnFire()
@@ -340,12 +351,9 @@ void AAwooCharacter::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, c
 		//implement interface
 		if (OtherActor->GetClass()->ImplementsInterface(UInteractable::StaticClass()))
 		{
-			//auto collect if pickup
-			if (!Cast<AItem>(OtherActor))
-			{
+		
 				IInteractable::Execute_Interact(OtherActor, this);
-			}
-			
+
 		}
 	}
 }
@@ -480,6 +488,7 @@ void AAwooCharacter::ProcessTraceHit(FHitResult& HitOut)
 		//show item info if item is detected
 		if (myItem)
 		{
+			myItem->gameChar = this;
 			InteractItem = myItem;
 			ShowInfoEvent.Broadcast(myItem->ItemName, myItem->ItemDesc, myItem->ItemHowTo);
 		}
@@ -487,14 +496,13 @@ void AAwooCharacter::ProcessTraceHit(FHitResult& HitOut)
 		{
 			IInteractable::Execute_Interact(HitOut.GetActor(), this);
 		}
-		
+
 	}
 	else
 	{
 		//UE_LOG(LogClass, Warning, TEXT("Actor is NOT Interactable!"));
 		//ClearPickupInfo();
 		InteractItem = nullptr;
-		MessageString = FString(TEXT(""));
 
 	}
 }
@@ -525,6 +533,7 @@ void AAwooCharacter::Tick(float DeltaTime)
 }
 
 
+//collect interacting item through key press into inventory
 void AAwooCharacter::Collect()
 {
 
@@ -540,6 +549,8 @@ void AAwooCharacter::Collect()
 	}
 }
 
+
+//equip item directly when interacting through keypress
 void AAwooCharacter::Equip()
 {
 	if (InteractItem)
@@ -556,6 +567,8 @@ void AAwooCharacter::Equip()
 	}
 }
 
+
+//use equipped item and remove item from inventory
 void AAwooCharacter::UseEquipItem()
 {
 	//check item equipped
@@ -564,16 +577,23 @@ void AAwooCharacter::UseEquipItem()
 		//call item UseItem function to broadcast event
 		ItemEquipped->UseItem();
 
-		//remove from inventory
-		myInventory.RemoveSingle(ItemEquipped);
+		if (ItemEquipped->isUsed)
+		{
+			//remove from inventory
+			myInventory.RemoveSingle(ItemEquipped);
 
-		//clear equip slot
-		ItemEquipped = nullptr;
+			//clear equip slot
+			ItemEquipped = nullptr;
+		}
+
 	}
+
+	DisplayMessageEvent.Broadcast(MessageString);
 
 }
 
 
+//drop equipped item nearby
 void AAwooCharacter::DropItem()
 {
 	if (ItemEquipped)
@@ -594,4 +614,20 @@ void AAwooCharacter::DropItem()
 void AAwooCharacter::pauseGame()
 {
 	PausePressed = true;
+}
+
+
+//use consumable items directly by key press when interacting
+void AAwooCharacter::Consume()
+{
+	if (InteractItem)
+	{
+		if (InteractItem->isConsumable)
+		{
+			InteractItem->UseItem();
+
+			IInteractable::Execute_Interact(InteractItem, this);
+		}
+	}
+
 }

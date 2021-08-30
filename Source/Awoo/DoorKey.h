@@ -31,4 +31,8 @@ public:
 	//event dispatcher
 	UPROPERTY(BlueprintAssignable, Category = "KeyUsage")
 		FKeyEventDispatcher UnlockEvent;
+
+	//location of correspond lock/switch
+	UPROPERTY(EditAnywhere)
+		FVector LockLoc;
 };

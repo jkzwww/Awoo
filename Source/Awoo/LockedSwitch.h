@@ -2,15 +2,14 @@
 
 #pragma once
 
-#include "AwooCharacter.h"
-#include "Interactable.h"
+
 #include "DoorKey.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "LockedSwitch.generated.h"
 
 UCLASS()
-class AWOO_API ALockedSwitch : public AActor,public IInteractable
+class AWOO_API ALockedSwitch : public AActor
 {
 	GENERATED_BODY()
 	
@@ -45,9 +44,4 @@ public:
 	UFUNCTION()
 		void OnSwitch();
 
-	//interact interface (to display message)
-	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Interact")
-		void Interact(AActor* target);
-
-	virtual void Interact_Implementation(AActor* target) override;
 };

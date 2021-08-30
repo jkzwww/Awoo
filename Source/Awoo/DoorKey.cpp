@@ -2,6 +2,7 @@
 
 
 #include "DoorKey.h"
+#include "AwooCharacter.h"
 
 // Sets default values
 ADoorKey::ADoorKey()
@@ -33,9 +34,29 @@ void ADoorKey::Tick(float DeltaTime)
 //specific function when item used by player
 void ADoorKey::UseItem()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Key Used!!"));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Key Used!!"));
 
-	//call key event binded to unlock event of door
-	UnlockEvent.Broadcast();
+	//check if game character is near enough switch
+	if (gameChar)
+	{
+		if (FVector::Dist(gameChar->GetActorLocation(), LockLoc) < 80)
+		{
+			//call key event binded to unlock event of door
+			UnlockEvent.Broadcast();
+
+			isUsed = true;
+
+			gameChar->MessageString = FString(TEXT("Switch UNLOCKED!"));
+		}
+		else
+		{
+			//display message
+			//unusable, too far
+			gameChar->MessageString = FString(TEXT("Too far from lock."));
+
+			isUsed = false;
+		}
+	}
+	
 
 }

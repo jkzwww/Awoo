@@ -7,6 +7,8 @@
 #include "GameFramework/Actor.h"
 #include "Item.generated.h"
 
+class AAwooCharacter;
+
 UCLASS()
 class AWOO_API AItem : public AActor, public IInteractable
 {
@@ -29,6 +31,14 @@ public:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "info")
 		FString ItemHowTo;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "info")
+		bool isConsumable;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "info")
+		bool isUsed;
+
+	AAwooCharacter* gameChar;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -48,4 +58,5 @@ public:
 
 	UFUNCTION(BlueprintCallable,Category = "ItemUsage")
 		void DropItem(FVector dropLoc);
+
 };

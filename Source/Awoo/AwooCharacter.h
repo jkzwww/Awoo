@@ -18,11 +18,11 @@ class UMotionControllerComponent;
 class UAnimMontage;
 class USoundBase;
 
-class APickup;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~event dispatcher~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMyEventDispatcher, bool, isWinning);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FInfoEventDispatcher, FString, name,FString,desc,FString,howTo);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMessageDispatcher, FString, myMessage);
 
 UCLASS(config=Game)
 class AAwooCharacter : public ACharacter
@@ -166,15 +166,24 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gamestats)
 		bool PausePressed = false;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
+		float maxHealth;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
+		float maxHydration;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
+		float maxHunger;
+
 	//character stats
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
-		float health = 100.0f;
+		float health;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
-		float hunger = 100.0f;
+		float hunger;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
-		float hydration = 100.0f;
+		float hydration;
 
 	//character stats droprate
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CharSetting")
@@ -201,18 +210,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Display")
 		TArray <AItem*> myInventory;
 
-	//pickups
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Display")
-	 	TArray <APickup*> myPickups;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Pickups")
-		int myMeds;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Pickups")
-		int myFood;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Pickups")
-		int myDrinks;
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~function declare~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	//game state variables mutator
@@ -256,6 +253,9 @@ public:
 	void UseEquipItem();
 
 	void DropItem();
+
+	void Consume();
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~event~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	UPROPERTY(BlueprintAssignable, Category = "GameState")
@@ -263,5 +263,8 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category = "Tracing")
 		FInfoEventDispatcher ShowInfoEvent;
+
+	UPROPERTY(BlueprintAssignable, Category = "Display")
+		FMessageDispatcher DisplayMessageEvent;
 };
 

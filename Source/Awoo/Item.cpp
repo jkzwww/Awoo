@@ -12,10 +12,13 @@ AItem::AItem()
 	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BaseMesh"));
 	RootComponent = BaseMesh;
 
-	//test values
+	//default values
 	ItemName = FString(TEXT("Test product"));
 	ItemDesc = FString(TEXT("Nothing useful"));
 	ItemHowTo = FString(TEXT("Press C to collect\nPress E to equip directly"));
+
+	isConsumable = false;
+	isUsed = false;
 }
 
 // Called when the game starts or when spawned
@@ -46,9 +49,6 @@ void AItem::Interact_Implementation(AActor* target)
 	// Stops the Actor from ticking
 	//SetActorTickEnabled(false);
 	
-	
-
-
 
 }
 
