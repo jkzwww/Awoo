@@ -554,6 +554,7 @@ void AAwooCharacter::UseEquipItem()
 	if (ItemEquipped)
 	{
 		//call item UseItem function to broadcast event
+		ItemEquipped->UseItem();
 
 		//remove from inventory
 		myInventory.RemoveSingle(ItemEquipped);
