@@ -43,12 +43,12 @@ void AFlipSwitch::Interact_Implementation(AActor* target)
 		if (!isOn)
 		{
 			gameChar->MessageString = FString(TEXT("Switch off. Press F to flip on."));
-			SetActorRotation(FMath::Lerp(GetActorRotation(), defaultRotation, 0.05f));
+			
 		}
 		else
 		{
 			gameChar->MessageString = FString(TEXT("Switch on. Press F to flip off."));
-			SetActorRotation(FMath::Lerp(GetActorRotation(), FRotator(defaultRotation.Pitch, -defaultRotation.Yaw, defaultRotation.Roll), 0.05f));
+			
 		}
 
 		//bind toggle function to event
@@ -67,6 +67,7 @@ void AFlipSwitch::ToggleSwitch()
 		if (FVector::Dist(gameChar->GetActorLocation(), GetActorLocation()) < 500)
 		{
 			isOn = !isOn;
+			SetActorRotation(FRotator(defaultRotation.Pitch, -1 * (defaultRotation.Yaw), defaultRotation.Roll));
 		}
 		
 	}
