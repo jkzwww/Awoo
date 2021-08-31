@@ -10,6 +10,8 @@
 
 class AAwooCharacter;
 
+
+
 UCLASS()
 class AWOO_API ALockedSwitch : public AActor,public IInteractable
 {

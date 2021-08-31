@@ -15,6 +15,7 @@ AFlipSwitch::AFlipSwitch()
 
 	//default values
 	isOn = false;
+	isMyEventBound = false;
 }
 
 // Called when the game starts or when spawned
@@ -29,6 +30,15 @@ void AFlipSwitch::BeginPlay()
 void AFlipSwitch::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (!isOn)
+	{
+		SetActorRotation(FRotator(0, 0, -60));
+	}
+	else
+	{
+		SetActorRotation(FRotator(0, 0, -120));
+	}
 
 }
 
@@ -51,8 +61,14 @@ void AFlipSwitch::Interact_Implementation(AActor* target)
 			
 		}
 
-		//bind toggle function to event
-		gameChar->FlipSwitchEvent.AddDynamic(this, &AFlipSwitch::ToggleSwitch);
+		//bind toggle function to event once;
+		if (!isMyEventBound)
+		{
+			gameChar->FlipSwitchEvent.AddDynamic(this, &AFlipSwitch::ToggleSwitch);
+
+			isMyEventBound = true;
+		}
+		
 	}
 }
 
@@ -64,10 +80,10 @@ void AFlipSwitch::ToggleSwitch()
 	if (gameChar)
 	{
 		//check whether player is near enough to switch
-		if (FVector::Dist(gameChar->GetActorLocation(), GetActorLocation()) < 500)
+		if (FVector::Dist(gameChar->GetActorLocation(), GetActorLocation()) < 700)
 		{
 			isOn = !isOn;
-			SetActorRotation(FRotator(defaultRotation.Pitch, -1 * (defaultRotation.Yaw), defaultRotation.Roll));
+		
 		}
 		
 	}

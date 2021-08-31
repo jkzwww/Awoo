@@ -35,5 +35,42 @@ void ABridge::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	AFlipSwitch* myFlip;
+
+	ALockedSwitch* myLock;
+
+	FVector myEndLoc;
+
+	if (mySwitch)
+	{
+		myFlip = Cast<AFlipSwitch> (mySwitch);
+		myLock = Cast<ALockedSwitch>(mySwitch);
+
+		if (myFlip)
+		{
+			if (myFlip->isOn)
+			{
+				myEndLoc = targetPosition;
+			}
+			else
+			{
+				myEndLoc = defaultPosition;
+			}
+		}
+
+		if (myLock)
+		{
+			if (!myLock->isLocked)
+			{
+				myEndLoc = targetPosition;
+			}
+			else
+			{
+				myEndLoc = defaultPosition;
+			}
+		}
+	}
+
+	SetActorLocation(FMath::Lerp(GetActorLocation(),myEndLoc, 0.05f));
 }
 

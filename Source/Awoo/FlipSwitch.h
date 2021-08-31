@@ -36,6 +36,8 @@ protected:
 
 	AAwooCharacter* gameChar;
 
+	bool isMyEventBound;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
