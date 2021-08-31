@@ -21,6 +21,11 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Interact")
 		class UStaticMeshComponent* BaseMesh;
 
+	//z location when unlocked
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interact")
+		float Zoffset;
+
+	//key which open this switch
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pairing")
 		ADoorKey* myKey;
 
@@ -28,9 +33,6 @@ public:
 	UPROPERTY(EditAnywhere, Category = "SwitchState")
 		bool isLocked;
 
-	//message to display when checked
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Display")
-		FString LockMessage = FString(TEXT(""));
 
 protected:
 	// Called when the game starts or when spawned

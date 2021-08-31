@@ -611,11 +611,6 @@ void AAwooCharacter::DropItem()
 
 }
 
-void AAwooCharacter::pauseGame()
-{
-	PausePressed = true;
-}
-
 
 //use consumable items directly by key press when interacting
 void AAwooCharacter::Consume()
@@ -626,8 +621,25 @@ void AAwooCharacter::Consume()
 		{
 			InteractItem->UseItem();
 
+			DisplayMessageEvent.Broadcast(MessageString);
+
 			IInteractable::Execute_Interact(InteractItem, this);
 		}
 	}
 
 }
+
+
+//pause game variable mutator
+void AAwooCharacter::pauseGame()
+{
+	PausePressed = true;
+}
+
+
+//kill player instantly and end game
+void AAwooCharacter::killMe()
+{
+	GameOverEvent.Broadcast(0);
+}
+

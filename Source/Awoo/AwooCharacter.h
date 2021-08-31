@@ -215,6 +215,9 @@ public:
 	//game state variables mutator
 	void pauseGame();
 
+	//kill player
+	void killMe();
+
 	//declare overlap begin function
 	UFUNCTION()
 		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);

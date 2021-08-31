@@ -12,7 +12,11 @@ APickupItem::APickupItem()
 	//default name and desc
 	ItemName = FString(TEXT("Potion"));
 	ItemDesc = FString(TEXT("Increases stats"));
-	ItemHowTo = FString(TEXT("Press C to collect\nPress H to consume instantly"));
+	ItemHowTo = FString(TEXT("Press C to collect\nPress R to consume instantly\nPress E to equip"));
+
+	//default values
+	boostType = 0;
+	boostValue = 20;
 
 }
 

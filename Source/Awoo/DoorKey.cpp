@@ -39,7 +39,7 @@ void ADoorKey::UseItem()
 	//check if game character is near enough switch
 	if (gameChar)
 	{
-		if (FVector::Dist(gameChar->GetActorLocation(), LockLoc) < 80)
+		if (FVector::Dist(gameChar->GetActorLocation(), LockLoc) < 500)
 		{
 			//call key event binded to unlock event of door
 			UnlockEvent.Broadcast();

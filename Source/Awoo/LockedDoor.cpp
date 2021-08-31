@@ -25,6 +25,7 @@ void ALockedDoor::BeginPlay()
 	if (myKey)
 	{
 		myKey->UnlockEvent.AddDynamic(this, &ALockedDoor::OpenDoor);
+		myKey->LockLoc = GetActorLocation();
 	}
 
 	baseZ = BaseMesh->GetComponentLocation().Z;
