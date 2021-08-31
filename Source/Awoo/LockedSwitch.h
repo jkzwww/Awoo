@@ -8,8 +8,10 @@
 #include "GameFramework/Actor.h"
 #include "LockedSwitch.generated.h"
 
+class AAwooCharacter;
+
 UCLASS()
-class AWOO_API ALockedSwitch : public AActor
+class AWOO_API ALockedSwitch : public AActor,public IInteractable
 {
 	GENERATED_BODY()
 	
@@ -29,7 +31,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pairing")
 		ADoorKey* myKey;
 
-	//door lock state
+	//switch lock state
 	UPROPERTY(EditAnywhere, Category = "SwitchState")
 		bool isLocked;
 
@@ -46,4 +48,9 @@ public:
 	UFUNCTION()
 		void OnSwitch();
 
+	//to show message when interacted
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Interact")
+		void Interact(AActor* target);
+
+	virtual void Interact_Implementation(AActor* target) override;
 };

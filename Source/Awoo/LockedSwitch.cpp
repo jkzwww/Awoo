@@ -2,6 +2,7 @@
 
 
 #include "LockedSwitch.h"
+#include "AwooCharacter.h"
 
 // Sets default values
 ALockedSwitch::ALockedSwitch()
@@ -50,4 +51,25 @@ void ALockedSwitch::OnSwitch()
 {
 	isLocked = false;
 
+}
+
+
+
+//show lock status when raycasted
+void ALockedSwitch::Interact_Implementation(AActor* target)
+{
+
+	AAwooCharacter* gameChar = Cast<AAwooCharacter>(target);
+
+	if (gameChar)
+	{
+		if (isLocked)
+		{
+			gameChar->MessageString = FString(TEXT("Switch locked. Find and use key to unlock."));
+		}
+		else
+		{
+			gameChar->MessageString = FString(TEXT("Switch unlocked."));
+		}
+	}
 }

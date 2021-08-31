@@ -23,6 +23,7 @@ class USoundBase;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMyEventDispatcher, bool, isWinning);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FInfoEventDispatcher, FString, name,FString,desc,FString,howTo);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMessageDispatcher, FString, myMessage);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FFlipEventDispatcher);
 
 UCLASS(config=Game)
 class AAwooCharacter : public ACharacter
@@ -253,12 +254,14 @@ public:
 
 	void Equip();
 
-	void UseEquipItem();
+	UFUNCTION(BlueprintCallable,Category = "Consume")
+		void UseEquipItem();
 
 	void DropItem();
 
 	void Consume();
 
+	void FlipASwitch();
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~event~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	UPROPERTY(BlueprintAssignable, Category = "GameState")
@@ -269,5 +272,8 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category = "Display")
 		FMessageDispatcher DisplayMessageEvent;
+
+	UPROPERTY(BlueprintAssignable, Category = "Switches")
+		FFlipEventDispatcher FlipSwitchEvent;
 };
 

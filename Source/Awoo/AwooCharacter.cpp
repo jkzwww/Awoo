@@ -177,6 +177,9 @@ void AAwooCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 
 	//bind consume
 	PlayerInputComponent->BindAction("Consume", IE_Pressed, this, &AAwooCharacter::Consume);
+
+	//bind flip
+	PlayerInputComponent->BindAction("Flip", IE_Pressed, this, &AAwooCharacter::FlipASwitch);
 }
 
 void AAwooCharacter::OnFire()
@@ -495,6 +498,7 @@ void AAwooCharacter::ProcessTraceHit(FHitResult& HitOut)
 		else
 		{
 			IInteractable::Execute_Interact(HitOut.GetActor(), this);
+			DisplayMessageEvent.Broadcast(MessageString); 
 		}
 
 	}
@@ -643,3 +647,9 @@ void AAwooCharacter::killMe()
 	GameOverEvent.Broadcast(0);
 }
 
+
+//flip switch nearby
+void AAwooCharacter::FlipASwitch()
+{
+	FlipSwitchEvent.Broadcast();
+}
