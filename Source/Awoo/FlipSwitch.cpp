@@ -12,13 +12,6 @@ AFlipSwitch::AFlipSwitch()
 	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BaseMesh"));
 	RootComponent = BaseMesh;
 
-	//bind toggle function to player flip switch event
-	AAwooCharacter* charRef = Cast<AAwooCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-
-	if (charRef)
-	{
-		charRef->FlipSwitchEvent.AddDynamic(this, &AFlipSwitch::ToggleSwitch);
-	}
 
 	//default values
 	isOn = false;
@@ -43,7 +36,7 @@ void AFlipSwitch::Tick(float DeltaTime)
 void AFlipSwitch::Interact_Implementation(AActor* target)
 {
 
-	AAwooCharacter* gameChar = Cast<AAwooCharacter>(target);
+	gameChar = Cast<AAwooCharacter>(target);
 
 	if (gameChar)
 	{
@@ -58,7 +51,8 @@ void AFlipSwitch::Interact_Implementation(AActor* target)
 			SetActorRotation(FMath::Lerp(GetActorRotation(), FRotator(defaultRotation.Pitch, -defaultRotation.Yaw, defaultRotation.Roll), 0.05f));
 		}
 
-		
+		//bind toggle function to event
+		gameChar->FlipSwitchEvent.AddDynamic(this, &AFlipSwitch::ToggleSwitch);
 	}
 }
 
@@ -66,12 +60,11 @@ void AFlipSwitch::Interact_Implementation(AActor* target)
 //toggle switch on off
 void AFlipSwitch::ToggleSwitch()
 {
-	ACharacter* charRef = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 
-	if (charRef)
+	if (gameChar)
 	{
 		//check whether player is near enough to switch
-		if (FVector::Dist(charRef->GetActorLocation(), GetActorLocation()) < 500)
+		if (FVector::Dist(gameChar->GetActorLocation(), GetActorLocation()) < 500)
 		{
 			isOn = !isOn;
 		}

@@ -34,6 +34,8 @@ protected:
 
 	FRotator defaultRotation;
 
+	AAwooCharacter* gameChar;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -47,5 +49,5 @@ public:
 	UFUNCTION()
 		void ToggleSwitch();
 
-
+	
 };
