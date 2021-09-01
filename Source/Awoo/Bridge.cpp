@@ -39,7 +39,7 @@ void ABridge::Tick(float DeltaTime)
 
 	ALockedSwitch* myLock;
 
-	FVector myEndLoc;
+	FVector myEndLoc = FVector(0,0,0);
 
 	if (mySwitch)
 	{

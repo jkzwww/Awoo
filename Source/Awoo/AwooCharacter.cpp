@@ -365,6 +365,13 @@ void AAwooCharacter::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, c
 			//player win
 			GameOverEvent.Broadcast(1);
 		}
+
+		//if overlap with pit trap (mytrap)
+		if (Cast<AMyTrap>(OtherActor))
+		{
+			//player die
+			GameOverEvent.Broadcast(0);
+		}
 	}
 }
 
@@ -645,13 +652,6 @@ void AAwooCharacter::Consume()
 void AAwooCharacter::pauseGame()
 {
 	PausePressed = true;
-}
-
-
-//kill player instantly and end game
-void AAwooCharacter::killMe()
-{
-	GameOverEvent.Broadcast(0);
 }
 
 

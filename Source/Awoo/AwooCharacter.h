@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "MyTrap.h"
 #include "EndPlatform.h"
 #include "Components/CapsuleComponent.h"
 #include "Interactable.h"
@@ -216,9 +217,6 @@ public:
 
 	//game state variables mutator
 	void pauseGame();
-
-	//kill player
-	void killMe();
 
 	//declare overlap begin function
 	UFUNCTION()
