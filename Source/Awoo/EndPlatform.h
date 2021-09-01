@@ -11,9 +11,18 @@ class AWOO_API AEndPlatform : public AActor
 {
 	GENERATED_BODY()
 	
+
+
 public:	
 	// Sets default values for this actor's properties
 	AEndPlatform();
+
+	//Base Mesh
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Interact")
+		class UStaticMeshComponent* BaseMesh;
+
+	UPROPERTY(EditAnywhere)
+		float RotationSpeed;
 
 protected:
 	// Called when the game starts or when spawned

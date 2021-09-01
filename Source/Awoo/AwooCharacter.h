@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "EndPlatform.h"
 #include "Components/CapsuleComponent.h"
 #include "Interactable.h"
 #include "Item.h"
