@@ -9,9 +9,25 @@
 /**
  * 
  */
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FMatchEventDispatcher);
+
 UCLASS()
 class AWOO_API AMatch : public AItem
 {
 	GENERATED_BODY()
-	
+
+public:
+
+	AMatch();
+
+	virtual void UseItem() override;
+
+	//event dispatcher
+	UPROPERTY(BlueprintAssignable, Category = "Torchlight")
+		FMatchEventDispatcher LightUpEvent;
+
+	UPROPERTY(EditAnywhere)
+		int MatchNum;
+
 };
