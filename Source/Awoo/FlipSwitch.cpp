@@ -33,11 +33,11 @@ void AFlipSwitch::Tick(float DeltaTime)
 
 	if (!isOn)
 	{
-		SetActorRotation(FRotator(0, 0, -60));
+		SetActorRotation(FRotator(defaultRotation.Pitch, defaultRotation.Yaw, -60));
 	}
 	else
 	{
-		SetActorRotation(FRotator(0, 0, -120));
+		SetActorRotation(FRotator(defaultRotation.Pitch, defaultRotation.Yaw, -120));
 	}
 
 }
