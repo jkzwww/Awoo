@@ -210,8 +210,12 @@ public:
 		AItem* ItemEquipped = nullptr;
 	
 	//inventory for items
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Display")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Item")
 		TArray <AItem*> myInventory;
+
+	//inventory slots available
+	UPROPERTY(EditAnywhere, Category = "Item")
+		int InvSlotsNum;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~function declare~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

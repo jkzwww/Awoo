@@ -35,6 +35,7 @@ AAwooCharacter::AAwooCharacter()
 	maxHealth = 100;
 	maxHunger = 100;
 	maxHydration = 100;
+	InvSlotsNum = 15;
 
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(55.f, 96.0f);
@@ -559,35 +560,55 @@ void AAwooCharacter::Tick(float DeltaTime)
 //collect interacting item through key press into inventory
 void AAwooCharacter::Collect()
 {
-
-	if (InteractItem)
+	if (myInventory.Num() <= InvSlotsNum)
 	{
-		//item event when collected
-		//interact item pointer is changed regularly, take item address as pointer instead
-		IInteractable::Execute_Interact(InteractItem, this);
+		if (InteractItem)
+		{
+			//item event when collected
+			//interact item pointer is changed regularly, take item address as pointer instead
+			IInteractable::Execute_Interact(InteractItem, this);
 
-		//add to inventory
-		myInventory.Add(&(*InteractItem));
-		
+			//add to inventory
+			myInventory.Add(&(*InteractItem));
+
+			DisplayMessageEvent.Broadcast(FString(TEXT("Item added to inventory[I]")));
+		}
+
+
 	}
+	else
+	{
+		DisplayMessageEvent.Broadcast(FString(TEXT("Inventory FULL!! Drop some items")));
+	}
+
 }
 
 
 //equip item directly when interacting through keypress
 void AAwooCharacter::Equip()
 {
-	if (InteractItem)
+	if (myInventory.Num() <= InvSlotsNum)
 	{
-		//item event when collected
-		IInteractable::Execute_Interact(InteractItem, this);
+		if (InteractItem)
+		{
+			//item event when collected
+			IInteractable::Execute_Interact(InteractItem, this);
 
-		//add to inventory
-		myInventory.Add(&(*InteractItem)); 
+			//add to inventory
+			myInventory.Add(&(*InteractItem));
 
-		//equip directly
-		ItemEquipped = &(*InteractItem);
+			//equip directly
+			ItemEquipped = &(*InteractItem);
 
+			DisplayMessageEvent.Broadcast(FString(TEXT("Item equipped and added to inventory[I]")));
+
+		}
 	}
+	else
+	{
+		DisplayMessageEvent.Broadcast(FString(TEXT("Inventory FULL!!Drop some items")));
+	}
+
 }
 
 
