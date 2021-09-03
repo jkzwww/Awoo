@@ -19,6 +19,7 @@ AItem::AItem()
 
 	isConsumable = false;
 	isUsed = false;
+
 }
 
 // Called when the game starts or when spawned
@@ -69,9 +70,9 @@ void AItem::DropItem(FVector dropLoc)
 	//throw item at player location
 	SetActorLocation(dropLoc);
 
-	// Hides visible components
+	// make visible components
 	SetActorHiddenInGame(false);
 
-	// Disables collision components
+	// Enable collision components
 	SetActorEnableCollision(true);
 }
