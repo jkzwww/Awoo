@@ -1,4 +1,3 @@
-
 FIT2097 assignment 1 survival game prototype
 
 Name: Zhi Wei Loh   ID: 31123074
@@ -19,7 +18,7 @@ but setting actor hidden in game to false is not working.
 
 Extra features and unsure points :
 - Inventory HUD that allows player to see all items and consume pickups instantly.
-- Self created material is allowed, it is just simple emmissive material as 
+- Whether self created material is allowed, it is just simple emmissive material as 
 game environment is design to be dark and all given materials are hard to see in game.
 
 Demonstration video link:
