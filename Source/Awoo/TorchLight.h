@@ -36,7 +36,8 @@ public:
 	// Sets default values for this actor's properties
 	ATorchLight();
 
-	bool isLit;
+	//ref to matchbox
+	AMatch* myMatchBox;
 
 protected:
 	// Called when the game starts or when spawned

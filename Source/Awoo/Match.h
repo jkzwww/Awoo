@@ -27,7 +27,7 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "Torchlight")
 		FMatchEventDispatcher LightUpEvent;
 
-	UPROPERTY(EditAnywhere)
-		int MatchNum;
+	//UPROPERTY(EditAnywhere)
+	//	int MatchNum;
 
 };

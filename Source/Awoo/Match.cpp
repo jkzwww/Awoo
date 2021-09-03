@@ -11,7 +11,7 @@ AMatch::AMatch()
 	//default name and desc
 	ItemName = FString(TEXT("Match"));
 	ItemDesc = FString(TEXT("A small match box with a few matches left."));
-	MatchNum = 5;
+	//MatchNum = 5;
 
 }
 
@@ -20,10 +20,12 @@ void AMatch::UseItem()
 {
 	LightUpEvent.Broadcast();
 
-	MatchNum--;
+	isUsed = true;
 
-	if (MatchNum == 0)
-	{
-		isUsed = true;
-	}
+	//MatchNum--;
+
+	//if (MatchNum == 0)
+	//{
+	//	isUsed = true;
+	//}
 }

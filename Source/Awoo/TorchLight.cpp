@@ -11,24 +11,25 @@ ATorchLight::ATorchLight()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	PointLight = CreateDefaultSubobject<UPointLightComponent>(TEXT("Point Light"));
-	PointLight->Intensity = 0;
-	RootComponent = PointLight;
 
+	//default intensity
+	LightIntensity = 8000.0f;
 
 	//private property unaccessible
 	//PointLight->bVisible = false;
 	//use intensity instead
 
-	//RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root Component"));
-	//VisibleComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Visible Component"));
-	//VisibleComponent->SetupAttachment(RootComponent);
-
-	//default intensity
-	LightIntensity = 300.0f;
-	isLit = false;
+	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root Component"));
+	VisibleComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Visible Component"));
+	VisibleComponent->SetupAttachment(RootComponent);
 	
-
+	PointLight = CreateDefaultSubobject<UPointLightComponent>(TEXT("Point Light"));
+	PointLight->Intensity = LightIntensity;
+	PointLight->SetVisibility(false);
+	PointLight->AddRelativeLocation(FVector(20, 0, 40));
+	PointLight->SetupAttachment(VisibleComponent);
+	
+	
 }
 
 // Called when the game starts or when spawned
@@ -48,16 +49,19 @@ void ATorchLight::Tick(float DeltaTime)
 
 void ATorchLight::ToggleLight()
 {
-	
-	if (FVector::Dist(gameChar->GetActorLocation(),GetActorLocation()) < 500)
+	if (gameChar)
 	{
-		PointLight->Intensity = LightIntensity;
-		gameChar->MessageString = FString(TEXT(""));
+		if (FVector::Dist(gameChar->GetActorLocation(), GetActorLocation()) < 700)
+		{
+			PointLight->SetVisibility(true);
+			gameChar->MessageString = FString(TEXT("Lit!!"));
+		}
+		else
+		{
+			gameChar->MessageString = FString(TEXT("Too far from torch"));
+		}
 	}
-	else
-	{
-		gameChar->MessageString = FString(TEXT("Too far from torch"));
-	}
+
 }
 
 
