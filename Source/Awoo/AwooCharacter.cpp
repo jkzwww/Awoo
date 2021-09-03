@@ -529,25 +529,30 @@ void AAwooCharacter::Tick(float DeltaTime)
 { 
 	Super::Tick(DeltaTime); 
 
-	if (hunger > 0)
-	{
-		hunger -= hungerDrop;
-	}
-	
-	if (hydration > 0)
-	{
-		hydration -= hydroDrop;
-	}
-	
-	if (hunger <= 0 || hydration <= 0)
-	{
-		health -= healthDrop;
-	}
-	
+
 	if (health <= 0)
 	{
 		GameOverEvent.Broadcast(0);
 	}
+	else
+	{
+		if (hunger > 0)
+		{
+			hunger -= hungerDrop;
+		}
+
+		if (hydration > 0)
+		{
+			hydration -= hydroDrop;
+		}
+
+		if (hunger <= 0 || hydration <= 0)
+		{
+			health -= healthDrop;
+		}
+	}
+
+
 }
 
 
