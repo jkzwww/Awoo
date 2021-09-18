@@ -84,6 +84,7 @@ void AFlipSwitch::ToggleSwitch()
 		{
 			isOn = !isOn;
 		
+			ActivateEvent.Broadcast();
 		}
 		
 	}

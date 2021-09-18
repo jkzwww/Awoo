@@ -10,6 +10,8 @@
 #include "FlipSwitch.generated.h"
 
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FFlipSwitchEventDispatcher);
+
 UCLASS()
 class AWOO_API AFlipSwitch : public AActor, public IInteractable
 {
@@ -51,5 +53,7 @@ public:
 	UFUNCTION()
 		void ToggleSwitch();
 
-	
+
+	UPROPERTY(BlueprintAssignable, Category = "Activate")
+		FFlipSwitchEventDispatcher ActivateEvent;
 };

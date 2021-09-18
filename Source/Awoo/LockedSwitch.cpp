@@ -4,6 +4,8 @@
 #include "LockedSwitch.h"
 #include "AwooCharacter.h"
 
+
+
 // Sets default values
 ALockedSwitch::ALockedSwitch()
 {
@@ -50,7 +52,7 @@ void ALockedSwitch::Tick(float DeltaTime)
 void ALockedSwitch::OnSwitch()
 {
 	isLocked = false;
-
+	ActivateEvent.Broadcast();
 }
 
 

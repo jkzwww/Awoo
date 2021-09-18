@@ -32,9 +32,15 @@ public:
 	UPROPERTY(EditAnywhere)
 		FVector targetPosition;
 
+	UFUNCTION()
+		void ActivateBridge();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	//bridge activation status
+	bool isActivated;
 
 public:	
 	// Called every frame

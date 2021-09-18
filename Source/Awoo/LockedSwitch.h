@@ -10,7 +10,7 @@
 
 class AAwooCharacter;
 
-
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FLockSwitchEventDispatcher);
 
 UCLASS()
 class AWOO_API ALockedSwitch : public AActor,public IInteractable
@@ -55,4 +55,7 @@ public:
 		void Interact(AActor* target);
 
 	virtual void Interact_Implementation(AActor* target) override;
+
+	UPROPERTY(BlueprintAssignable, Category = "Activate")
+		FLockSwitchEventDispatcher ActivateEvent;
 };

@@ -20,6 +20,9 @@ ABridge::ABridge()
 		VisibleComponent->SetStaticMesh(CubeObject.Object);
 	}
 
+	//default values
+	isActivated = false;
+
 }
 
 // Called when the game starts or when spawned
@@ -28,6 +31,26 @@ void ABridge::BeginPlay()
 	Super::BeginPlay();
 	
 	defaultPosition = GetActorLocation();
+
+	AFlipSwitch* myFlip;
+	ALockedSwitch* myLock;
+
+	if (mySwitch)
+	{
+		myFlip = Cast<AFlipSwitch>(mySwitch);
+		myLock = Cast<ALockedSwitch>(mySwitch);
+
+		if (myLock)
+		{
+			myLock->ActivateEvent.AddDynamic(this, &ABridge::ActivateBridge);
+		}
+
+		if (myFlip)
+		{
+			myFlip->ActivateEvent.AddDynamic(this, &ABridge::ActivateBridge);
+		}
+	}
+
 }
 
 // Called every frame
@@ -35,42 +58,24 @@ void ABridge::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	AFlipSwitch* myFlip;
-
-	ALockedSwitch* myLock;
-
+	
 	FVector myEndLoc = FVector(0,0,0);
 
-	if (mySwitch)
+	if (isActivated)
 	{
-		myFlip = Cast<AFlipSwitch> (mySwitch);
-		myLock = Cast<ALockedSwitch>(mySwitch);
-
-		if (myFlip)
-		{
-			if (myFlip->isOn)
-			{
-				myEndLoc = targetPosition;
-			}
-			else
-			{
-				myEndLoc = defaultPosition;
-			}
-		}
-
-		if (myLock)
-		{
-			if (!myLock->isLocked)
-			{
-				myEndLoc = targetPosition;
-			}
-			else
-			{
-				myEndLoc = defaultPosition;
-			}
-		}
+		myEndLoc = targetPosition;
 	}
+	else
+	{
+		myEndLoc = defaultPosition;
+	}
+
 
 	SetActorLocation(FMath::Lerp(GetActorLocation(),myEndLoc, 0.05f));
 }
 
+
+void ABridge::ActivateBridge()
+{
+	isActivated = !isActivated;
+}
