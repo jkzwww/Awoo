@@ -472,7 +472,7 @@ void AAwooCharacter::CallMyTrace()
 		if (HitData.GetActor())
 		{
 
-			UE_LOG(LogClass, Warning, TEXT("This a testing statement. %s"), *HitData.GetActor()->GetName());
+			//UE_LOG(LogClass, Warning, TEXT("This a testing statement. %s"), *HitData.GetActor()->GetName());
 			ProcessTraceHit(HitData);
 
 		}

@@ -59,6 +59,7 @@ void ALightPad::Tick(float DeltaTime)
 
 	if (isOn)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Light On"));
 		VisibleComponent->SetMaterial(0, OnMaterial);
 	}
 	else
@@ -71,7 +72,7 @@ void ALightPad::Tick(float DeltaTime)
 void ALightPad::ToggleLight()
 {
 	isOn = !isOn;
-
+	UE_LOG(LogTemp, Warning, TEXT("Toggled"));
 	//broadcast to codeBridge
 
 }

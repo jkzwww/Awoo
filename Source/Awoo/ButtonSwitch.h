@@ -26,15 +26,19 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Interact")
 		class UStaticMeshComponent* BaseMesh;
 
-	UPROPERTY(EditAnywhere)
-		UBoxComponent* TriggerVolume;
+	//UPROPERTY(EditAnywhere)
+	//	UBoxComponent* TriggerVolume;
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UFUNCTION()
-		void OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	//UFUNCTION()
+	//	void OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	AAwooCharacter* gameChar;
+
+	bool isMyEventBound;
 
 public:	
 	// Called every frame
@@ -43,4 +47,14 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category = "Activate")
 		FButtonEventDispatcher ToggleLightEvent;
+
+	//to show message when interacted
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Interact")
+		void Interact(AActor* target);
+
+	virtual void Interact_Implementation(AActor* target) override;
+
+	UFUNCTION()
+		void ButtonPressed();
+
 };
