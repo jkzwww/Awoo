@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Fuse.h"
 #include "Interactable.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
@@ -24,6 +25,10 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Interact")
 		class UStaticMeshComponent* BaseMesh;
 
+	//key which open this switch
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pairing")
+		AFuse* myFuse;
+	
 	UFUNCTION()
 		void OnPower();
 

@@ -2,6 +2,7 @@
 
 
 #include "Fuse.h"
+#include "AwooCharacter.h"
 
 AFuse::AFuse()
 {
@@ -33,5 +34,25 @@ void AFuse::Tick(float DeltaTime)
 //specific function when item used by player
 void AFuse::UseItem()
 {
+	//check if game character is near enough switch
+	if (gameChar)
+	{
+		if (FVector::Dist(gameChar->GetActorLocation(), PowerBoxLoc) < 500)
+		{
+			//broadcast power event
+			PowerEvent.Broadcast();
 
+			isUsed = true;
+
+			gameChar->MessageString = FString(TEXT("Fuse placed!"));
+		}
+		else
+		{
+			//display message
+			//unusable, too far
+			gameChar->MessageString = FString(TEXT("No powerbox nearby."));
+
+			isUsed = false;
+		}
+	}
 }

@@ -9,6 +9,9 @@
 /**
  * 
  */
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FFuseEventDispatcher);
+
 UCLASS()
 class AWOO_API AFuse : public AItem
 {
@@ -30,4 +33,9 @@ public:
 	//location of correspond powerbox
 	UPROPERTY(EditAnywhere)
 		FVector PowerBoxLoc;
+
+	//event dispatcher
+	UPROPERTY(BlueprintAssignable, Category = "Usage")
+		FFuseEventDispatcher PowerEvent;
+
 };

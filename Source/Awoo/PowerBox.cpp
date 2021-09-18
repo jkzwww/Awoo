@@ -23,6 +23,12 @@ void APowerBox::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	//bind power event
+	if (myFuse)
+	{
+		myFuse->PowerEvent.AddDynamic(this, &APowerBox::OnPower);
+	}
+
 }
 
 // Called every frame
