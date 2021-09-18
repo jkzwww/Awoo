@@ -16,6 +16,7 @@ AFlipSwitch::AFlipSwitch()
 	//default values
 	isOn = false;
 	isMyEventBound = false;
+	isSwitchLocked = false;
 }
 
 // Called when the game starts or when spawned
@@ -24,6 +25,16 @@ void AFlipSwitch::BeginPlay()
 	Super::BeginPlay();
 	
 	defaultRotation = GetActorRotation();
+
+	//if connected to power box
+	if (myPowerbox)
+	{
+		//lock switch until powerbox powered
+		isSwitchLocked = true;
+
+		//bind unlock switch function to powerbox event
+		myPowerbox->PowerSwitchEvent.AddDynamic(this, &AFlipSwitch::unlockSwitch);
+	}
 }
 
 // Called every frame
@@ -50,16 +61,24 @@ void AFlipSwitch::Interact_Implementation(AActor* target)
 
 	if (gameChar)
 	{
-		if (!isOn)
+		if (isSwitchLocked)
 		{
-			gameChar->MessageString = FString(TEXT("Switch off. Press F to flip on."));
-			
+			gameChar->MessageString = FString(TEXT("Switch locked. Connect power to powerbox."));
 		}
 		else
 		{
-			gameChar->MessageString = FString(TEXT("Switch on. Press F to flip off."));
-			
+			if (!isOn)
+			{
+				gameChar->MessageString = FString(TEXT("Switch off. Press F to flip on."));
+
+			}
+			else
+			{
+				gameChar->MessageString = FString(TEXT("Switch on. Press F to flip off."));
+
+			}
 		}
+
 
 		//bind toggle function to event once;
 		if (!isMyEventBound)
@@ -79,14 +98,24 @@ void AFlipSwitch::ToggleSwitch()
 
 	if (gameChar)
 	{
-		//check whether player is near enough to switch
-		if (FVector::Dist(gameChar->GetActorLocation(), GetActorLocation()) < 700)
+		//check whether switch is unlocked
+		if(!isSwitchLocked)
 		{
-			isOn = !isOn;
-		
-			ActivateEvent.Broadcast();
+			//check whether player is near enough to switch
+			if (FVector::Dist(gameChar->GetActorLocation(), GetActorLocation()) < 700)
+			{
+				isOn = !isOn;
+
+				ActivateEvent.Broadcast();
+			}
 		}
 		
 	}
 }
 	
+
+//switch unlock by powerbox
+void AFlipSwitch::unlockSwitch()
+{
+	isSwitchLocked = false;
+}

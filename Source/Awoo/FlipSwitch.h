@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "PowerBox.h"
 #include "Kismet/GameplayStatics.h"
 #include "Interactable.h"
 #include "AwooCharacter.h"
@@ -21,14 +22,24 @@ public:
 	// Sets default values for this actor's properties
 	AFlipSwitch();
 
-	//door lock state
+	//on off state
 	UPROPERTY(EditAnywhere, Category = "SwitchState")
 		bool isOn;
+
+	//lock state
+	UPROPERTY(EditAnywhere, Category = "SwitchState")
+		bool isSwitchLocked;
+
+	//powerbox
+	UPROPERTY(EditAnywhere, Category = "Power")
+		APowerBox* myPowerbox;
 
 	//Base Mesh
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Interact")
 		class UStaticMeshComponent* BaseMesh;
 
+	UFUNCTION()
+		void unlockSwitch();
 
 protected:
 	// Called when the game starts or when spawned
@@ -39,6 +50,7 @@ protected:
 	AAwooCharacter* gameChar;
 
 	bool isMyEventBound;
+
 
 public:	
 	// Called every frame
