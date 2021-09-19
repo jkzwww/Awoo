@@ -31,6 +31,10 @@ public:
 	UPROPERTY(EditAnywhere)
 		FRotator defaultRotation;
 
+	UPROPERTY(EditAnywhere)
+		FRotator targetRotation;
+	
+
 	UFUNCTION()
 		void UpdateInput(bool digit,int index);
 

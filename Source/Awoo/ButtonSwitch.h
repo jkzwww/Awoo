@@ -26,6 +26,12 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Interact")
 		class UStaticMeshComponent* BaseMesh;
 
+	UPROPERTY(EditAnywhere, Category = "Interact")
+		FVector defaultLocation;
+
+	UPROPERTY(EditAnywhere, Category = "Interact")
+		FVector targetLocation;
+
 	//UPROPERTY(EditAnywhere)
 	//	UBoxComponent* TriggerVolume;
 
@@ -39,6 +45,8 @@ protected:
 	AAwooCharacter* gameChar;
 
 	bool isMyEventBound;
+
+	bool isPressed;
 
 public:	
 	// Called every frame

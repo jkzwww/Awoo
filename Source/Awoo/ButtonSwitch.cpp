@@ -16,7 +16,9 @@ AButtonSwitch::AButtonSwitch()
 	//TriggerVolume = CreateDefaultSubobject<UBoxComponent>(TEXT("Trigger Volume"));
 	//TriggerVolume->SetupAttachment(BaseMesh);
 
+	//default values
 	isMyEventBound = false;
+	isPressed = false;
 }
 
 // Called when the game starts or when spawned
@@ -24,6 +26,8 @@ void AButtonSwitch::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	defaultLocation = GetActorLocation();
+
 	////bind function
 	//TriggerVolume->OnComponentBeginOverlap.AddDynamic(this, &AButtonSwitch::OnBoxOverlapBegin);
 }
@@ -33,6 +37,14 @@ void AButtonSwitch::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (isPressed)
+	{
+		SetActorLocation(FMath::Lerp(GetActorLocation(), targetLocation, 0.05f));
+	}
+	else
+	{
+		SetActorLocation(FMath::Lerp(GetActorLocation(), defaultLocation, 0.05f));
+	}
 
 
 }
@@ -57,8 +69,17 @@ void AButtonSwitch::Tick(float DeltaTime)
 
 void AButtonSwitch::ButtonPressed()
 {
-	ToggleLightEvent.Broadcast();
-	UE_LOG(LogTemp, Warning, TEXT("Button pressed"));
+	if (gameChar)
+	{
+		//check whether player is near enough to switch
+		if (FVector::Dist(gameChar->GetActorLocation(), GetActorLocation()) < 400)
+		{
+			ToggleLightEvent.Broadcast();
+			UE_LOG(LogTemp, Warning, TEXT("Button pressed"));
+			isPressed = !isPressed;
+		}
+	}
+	
 }
 
 

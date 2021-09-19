@@ -15,7 +15,11 @@ ACodeBridge::ACodeBridge()
 
 	//default bool
 	isActivated = false;
+
+	//3 digit code
 	myCode = {0,0,1};
+
+	//input code initialisation
 	InputCode = { 0,0,0 };
 
 }
@@ -59,7 +63,11 @@ void ACodeBridge::Tick(float DeltaTime)
 	{
 		//move
 		UE_LOG(LogTemp, Warning, TEXT("Code Bridge Activated!!!"));
-		SetActorRotation(FRotator(defaultRotation.Pitch, defaultRotation.Yaw, -defaultRotation.Roll));
+		SetActorRotation(targetRotation);
+	}
+	else
+	{
+		SetActorRotation(defaultRotation);
 	}
 }
 

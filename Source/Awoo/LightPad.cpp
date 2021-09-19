@@ -59,7 +59,7 @@ void ALightPad::Tick(float DeltaTime)
 
 	if (isOn)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Light On"));
+		//UE_LOG(LogTemp, Warning, TEXT("Light On"));
 		VisibleComponent->SetMaterial(0, OnMaterial);
 	}
 	else
