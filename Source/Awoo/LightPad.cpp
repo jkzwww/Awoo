@@ -74,6 +74,6 @@ void ALightPad::ToggleLight()
 	isOn = !isOn;
 	UE_LOG(LogTemp, Warning, TEXT("Toggled"));
 	//broadcast to codeBridge
-
+	SendCodeEvent.Broadcast(isOn, myCodeIndex);
 }
 

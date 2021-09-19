@@ -10,6 +10,8 @@
 #include "GameFramework/Actor.h"
 #include "LightPad.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FCodeEventDispatcher,bool , digit, int, index);
+
 UCLASS()
 class AWOO_API ALightPad : public AActor
 {
@@ -31,6 +33,9 @@ public:
 	UPROPERTY(EditAnywhere)
 		AButtonSwitch* mySwitch;
 
+	UPROPERTY(EditAnywhere, Category = "Code")
+		int myCodeIndex;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -43,4 +48,7 @@ public:
 
 	UFUNCTION()
 		void ToggleLight();
+
+	UPROPERTY(BlueprintAssignable, Category = "Code")
+		FCodeEventDispatcher SendCodeEvent;
 };
