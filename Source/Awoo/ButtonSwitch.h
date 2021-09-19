@@ -29,9 +29,12 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Interact")
 		FVector defaultLocation;
 
-	UPROPERTY(EditAnywhere, Category = "Interact")
-		FVector targetLocation;
+	//z location when unlocked
+	UPROPERTY(EditAnywhere,Category = "Interact")
+		float Zoffset;
 
+	UPROPERTY(EditAnywhere, Category = "Interact")
+		float pushDistance;
 	//UPROPERTY(EditAnywhere)
 	//	UBoxComponent* TriggerVolume;
 

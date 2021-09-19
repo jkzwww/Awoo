@@ -29,7 +29,7 @@ void ACodeBridge::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	defaultRotation = GetActorRotation();
+	defaultLocation = GetActorLocation();
 
 	for (int i = 0; i < myLights.Num(); i++)
 	{
@@ -58,17 +58,26 @@ void ACodeBridge::Tick(float DeltaTime)
 	{
 		isActivated = true;
 	}
+	else
+	{
+		isActivated = false;
+	}
+
+	FVector myEndLoc = FVector(0, 0, 0);
 
 	if (isActivated)
 	{
 		//move
 		UE_LOG(LogTemp, Warning, TEXT("Code Bridge Activated!!!"));
-		SetActorRotation(targetRotation);
+		myEndLoc = targetLocation;
 	}
 	else
 	{
-		SetActorRotation(defaultRotation);
+		myEndLoc = defaultLocation;
 	}
+
+	SetActorLocation(FMath::Lerp(GetActorLocation(), myEndLoc, 0.05f));
+
 }
 
 

@@ -19,6 +19,7 @@ AButtonSwitch::AButtonSwitch()
 	//default values
 	isMyEventBound = false;
 	isPressed = false;
+	pushDistance = 400;
 }
 
 // Called when the game starts or when spawned
@@ -39,11 +40,11 @@ void AButtonSwitch::Tick(float DeltaTime)
 
 	if (isPressed)
 	{
-		SetActorLocation(FMath::Lerp(GetActorLocation(), targetLocation, 0.05f));
+		SetActorLocation(FMath::Lerp(GetActorLocation(), FVector(GetActorLocation().X, GetActorLocation().Y, Zoffset), 0.05f));
 	}
 	else
 	{
-		SetActorLocation(FMath::Lerp(GetActorLocation(), defaultLocation, 0.05f));
+		SetActorLocation(FMath::Lerp(GetActorLocation(), FVector(defaultLocation), 0.05f));
 	}
 
 
@@ -72,7 +73,7 @@ void AButtonSwitch::ButtonPressed()
 	if (gameChar)
 	{
 		//check whether player is near enough to switch
-		if (FVector::Dist(gameChar->GetActorLocation(), GetActorLocation()) < 400)
+		if (FVector::Dist(gameChar->GetActorLocation(), GetActorLocation()) < pushDistance)
 		{
 			ToggleLightEvent.Broadcast();
 			UE_LOG(LogTemp, Warning, TEXT("Button pressed"));

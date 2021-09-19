@@ -29,10 +29,10 @@ public:
 		TArray<ALightPad*> myLights;
 
 	UPROPERTY(EditAnywhere)
-		FRotator defaultRotation;
+		FVector defaultLocation;
 
 	UPROPERTY(EditAnywhere)
-		FRotator targetRotation;
+		FVector targetLocation;
 	
 
 	UFUNCTION()
