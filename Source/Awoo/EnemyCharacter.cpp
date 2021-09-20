@@ -11,6 +11,8 @@ AEnemyCharacter::AEnemyCharacter()
 
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->RotationRate = FRotator(0.f, 5, 0.f);
+
+	patrolIndex = 0;
 }
 
 // Called when the game starts or when spawned
@@ -18,6 +20,19 @@ void AEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	//get player and its walk speed
+	ACharacter* player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+
+	float playerSpeed;
+	if (player)
+	{
+		playerSpeed = player->GetCharacterMovement()->MaxWalkSpeed;
+
+		//set ai to 10% slower than player
+		GetCharacterMovement()->MaxWalkSpeed = (0.9 * playerSpeed);
+
+		UE_LOG(LogTemp, Warning, TEXT("player speed found!"));
+	}
 }
 
 // Called every frame

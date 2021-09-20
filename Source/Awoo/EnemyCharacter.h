@@ -2,10 +2,17 @@
 
 #pragma once
 
+#include "Kismet/GameplayStatics.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "EnemyCharacter.generated.h"
+
+UENUM(BlueprintType)
+enum class EEnemyType : uint8 {
+	ET_GUARD      UMETA(DisplayName = "guardian"),
+	ET_SEEK       UMETA(DisplayName = "seeker"),
+};
 
 UCLASS()
 class AWOO_API AEnemyCharacter : public ACharacter
@@ -27,4 +34,13 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UPROPERTY(EditAnywhere, Category = "Patrol")
+		EEnemyType myPatrolType;
+
+	//patrol points for guardian
+	UPROPERTY(EditAnywhere, Category = "Patrol")
+		TArray<FVector> PatrolLocs;
+
+	//which point currently in
+	int patrolIndex;
 };
