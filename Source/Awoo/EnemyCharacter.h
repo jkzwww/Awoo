@@ -45,6 +45,10 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Attack")
 		float ChaseSpeedModifier;
 
+	//damage value on player when touched
+	UPROPERTY(EditAnywhere, Category = "Attack")
+		float DamageValue;
+
 	//which point currently in
 	int patrolIndex;
 };

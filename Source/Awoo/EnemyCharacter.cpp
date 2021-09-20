@@ -17,6 +17,7 @@ AEnemyCharacter::AEnemyCharacter()
 	//default values
 	patrolIndex = 0;
 	ChaseSpeedModifier = 0.8;
+	DamageValue = 5;
 }
 
 // Called when the game starts or when spawned
