@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "EnemyCharacter.h"
 #include "MyTrap.h"
 #include "EndPlatform.h"
 #include "Components/CapsuleComponent.h"

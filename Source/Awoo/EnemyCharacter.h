@@ -41,6 +41,10 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Patrol")
 		TArray<FVector> PatrolLocs;
 
+	//speed modifier
+	UPROPERTY(EditAnywhere, Category = "Attack")
+		float ChaseSpeedModifier;
+
 	//which point currently in
 	int patrolIndex;
 };

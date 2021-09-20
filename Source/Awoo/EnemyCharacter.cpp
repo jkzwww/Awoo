@@ -12,7 +12,11 @@ AEnemyCharacter::AEnemyCharacter()
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->RotationRate = FRotator(0.f, 5, 0.f);
 
+	GetMesh()->SetCollisionProfileName(TEXT("Trigger"));
+	
+	//default values
 	patrolIndex = 0;
+	ChaseSpeedModifier = 0.8;
 }
 
 // Called when the game starts or when spawned
@@ -29,7 +33,7 @@ void AEnemyCharacter::BeginPlay()
 		playerSpeed = player->GetCharacterMovement()->MaxWalkSpeed;
 
 		//set ai to 10% slower than player
-		GetCharacterMovement()->MaxWalkSpeed = (0.9 * playerSpeed);
+		GetCharacterMovement()->MaxWalkSpeed = (ChaseSpeedModifier * playerSpeed);
 
 		UE_LOG(LogTemp, Warning, TEXT("player speed found!"));
 	}

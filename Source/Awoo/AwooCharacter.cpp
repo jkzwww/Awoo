@@ -373,6 +373,13 @@ void AAwooCharacter::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, c
 			//player die
 			GameOverEvent.Broadcast(0);
 		}
+
+		if (Cast<AEnemyCharacter>(OtherActor))
+		{
+			//player attacked
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Touched by enemy!!!"));
+		}
+
 	}
 }
 
