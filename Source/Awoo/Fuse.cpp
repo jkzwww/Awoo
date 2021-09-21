@@ -25,7 +25,7 @@ void AFuse::BeginPlay()
 	Material = BaseMesh->GetMaterial(0);
 	matInstance = BaseMesh->CreateDynamicMaterialInstance(0, Material);
 
-	//set color for fuse
+	//set material parameter
 	if (matInstance)
 	{
 		matInstance->SetVectorParameterValue("ItemColor", FLinearColor(0.766667, 0.263344, 0.058910)); //orange

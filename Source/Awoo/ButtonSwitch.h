@@ -68,4 +68,10 @@ public:
 	UFUNCTION()
 		void ButtonPressed();
 
+	//materials
+	UPROPERTY(EditAnywhere)
+		UMaterialInterface* Material;
+
+	UMaterialInstanceDynamic* matInstance;
+
 };

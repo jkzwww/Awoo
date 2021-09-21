@@ -68,4 +68,10 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category = "Activate")
 		FFlipSwitchEventDispatcher ActivateEvent;
+
+	//materials
+	UPROPERTY(EditAnywhere)
+		UMaterialInterface* Material;
+
+	UMaterialInstanceDynamic* matInstance;
 };

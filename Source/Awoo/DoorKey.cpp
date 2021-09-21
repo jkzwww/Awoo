@@ -22,6 +22,15 @@ void ADoorKey::BeginPlay()
 {
 	Super::BeginPlay();
 
+	//get material
+	Material = BaseMesh->GetMaterial(0);
+	matInstance = BaseMesh->CreateDynamicMaterialInstance(0, Material);
+
+
+	if (matInstance)
+	{
+		matInstance->SetVectorParameterValue("KeyColor", KeyColor);
+	}
 }
 
 // Called every frame

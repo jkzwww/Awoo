@@ -35,6 +35,10 @@ void AFlipSwitch::BeginPlay()
 		//bind unlock switch function to powerbox event
 		myPowerbox->PowerSwitchEvent.AddDynamic(this, &AFlipSwitch::unlockSwitch);
 	}
+
+	//get material
+	Material = BaseMesh->GetMaterial(0);
+	matInstance = BaseMesh->CreateDynamicMaterialInstance(0, Material);
 }
 
 // Called every frame
@@ -45,10 +49,22 @@ void AFlipSwitch::Tick(float DeltaTime)
 	if (!isOn)
 	{
 		SetActorRotation(FRotator(defaultRotation.Pitch, defaultRotation.Yaw, -60));
+
+		//set material parameter
+		if (matInstance)
+		{
+			matInstance->SetScalarParameterValue("isOn", 0);
+		}
 	}
 	else
 	{
 		SetActorRotation(FRotator(defaultRotation.Pitch, defaultRotation.Yaw, -120));
+
+		//set material parameter
+		if (matInstance)
+		{
+			matInstance->SetScalarParameterValue("isOn", 1);
+		}
 	}
 
 }

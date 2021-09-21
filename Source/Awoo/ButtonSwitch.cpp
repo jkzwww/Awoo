@@ -31,6 +31,13 @@ void AButtonSwitch::BeginPlay()
 
 	////bind function
 	//TriggerVolume->OnComponentBeginOverlap.AddDynamic(this, &AButtonSwitch::OnBoxOverlapBegin);
+
+
+	//get material
+	Material = BaseMesh->GetMaterial(0);
+	matInstance = BaseMesh->CreateDynamicMaterialInstance(0, Material);
+
+
 }
 
 // Called every frame
@@ -41,10 +48,21 @@ void AButtonSwitch::Tick(float DeltaTime)
 	if (isPressed)
 	{
 		SetActorLocation(FMath::Lerp(GetActorLocation(), FVector(GetActorLocation().X, GetActorLocation().Y, Zoffset), 0.05f));
+
+
+		if (matInstance)
+		{
+			matInstance->SetScalarParameterValue("ButtonOn", 1);
+		}
 	}
 	else
 	{
 		SetActorLocation(FMath::Lerp(GetActorLocation(), FVector(defaultLocation), 0.05f));
+
+		if (matInstance)
+		{
+			matInstance->SetScalarParameterValue("ButtonOn", 0);
+		}
 	}
 
 

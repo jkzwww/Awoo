@@ -36,6 +36,9 @@ void ACodeBridge::BeginPlay()
 		myLights[i]->SendCodeEvent.AddDynamic(this, &ACodeBridge::UpdateInput);
 	}
 
+	//get material
+	Material = VisibleComponent->GetMaterial(0);
+	matInstance = VisibleComponent->CreateDynamicMaterialInstance(0, Material);
 }
 
 // Called every frame
@@ -70,10 +73,22 @@ void ACodeBridge::Tick(float DeltaTime)
 		//move
 		UE_LOG(LogTemp, Warning, TEXT("Code Bridge Activated!!!"));
 		myEndLoc = targetLocation;
+
+		//set material parameter
+		if (matInstance)
+		{
+			matInstance->SetScalarParameterValue("ActivationEmissive", 0.5);
+		}
 	}
 	else
 	{
 		myEndLoc = defaultLocation;
+
+		//set material parameter
+		if (matInstance)
+		{
+			matInstance->SetScalarParameterValue("ActivationEmissive", 0);
+		}
 	}
 
 	SetActorLocation(FMath::Lerp(GetActorLocation(), myEndLoc, 0.05f));

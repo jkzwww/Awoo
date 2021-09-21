@@ -30,6 +30,15 @@ void ALockedSwitch::BeginPlay()
 		myKey->UnlockEvent.AddDynamic(this, &ALockedSwitch::OnSwitch);
 		myKey->LockLoc = GetActorLocation();
 	}
+
+	//get material
+	Material = BaseMesh->GetMaterial(0);
+	matInstance = BaseMesh->CreateDynamicMaterialInstance(0, Material);
+
+	if (matInstance)
+	{
+		matInstance->SetVectorParameterValue("LockColor", LockColor);
+	}
 }
 
 // Called every frame
@@ -46,6 +55,12 @@ void ALockedSwitch::Tick(float DeltaTime)
 	{
 		//SetActorRotation(FMath::Lerp(GetActorRotation(), FRotator(0, -90, 0), 0.05f));
 		SetActorLocation(FMath::Lerp(GetActorLocation(), FVector(GetActorLocation().X, GetActorLocation().Y, Zoffset), 0.05f));
+
+		//set material parameter
+		if (matInstance)
+		{
+			matInstance->SetScalarParameterValue("isUnlock", 1);
+		}
 	}
 }
 

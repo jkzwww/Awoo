@@ -58,4 +58,14 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category = "Activate")
 		FLockSwitchEventDispatcher ActivateEvent;
+
+	//materials
+	UPROPERTY(EditAnywhere,Category = "Material")
+		UMaterialInterface* Material;
+
+	UMaterialInstanceDynamic* matInstance;
+
+	UPROPERTY(EditAnywhere,Category = "Material")
+		FLinearColor LockColor;
+
 };

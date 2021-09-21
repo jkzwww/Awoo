@@ -51,6 +51,10 @@ void ABridge::BeginPlay()
 		}
 	}
 
+
+	//get material
+	Material = VisibleComponent->GetMaterial(0);
+	matInstance = VisibleComponent->CreateDynamicMaterialInstance(0, Material);
 }
 
 // Called every frame
@@ -64,10 +68,23 @@ void ABridge::Tick(float DeltaTime)
 	if (isActivated)
 	{
 		myEndLoc = targetPosition;
+
+
+		//set material parameter
+		if (matInstance)
+		{
+			matInstance->SetScalarParameterValue("ActivationEmissive", 0.5);
+		}
 	}
 	else
 	{
 		myEndLoc = defaultPosition;
+
+		//set material parameter
+		if (matInstance)
+		{
+			matInstance->SetScalarParameterValue("ActivationEmissive", 0);
+		}
 	}
 
 

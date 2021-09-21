@@ -35,4 +35,13 @@ public:
 	//location of correspond lock/switch
 	UPROPERTY(EditAnywhere)
 		FVector LockLoc;
+
+	//materials
+	UPROPERTY(EditAnywhere)
+		UMaterialInterface* Material;
+
+	UMaterialInstanceDynamic* matInstance;
+
+	UPROPERTY(EditAnywhere, Category = "Material")
+		FLinearColor KeyColor;
 };
