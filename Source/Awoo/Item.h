@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "UObject/ConstructorHelpers.h"
+#include "Materials/Material.h"
 #include "Interactable.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"

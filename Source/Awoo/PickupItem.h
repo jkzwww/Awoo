@@ -24,6 +24,12 @@ class AWOO_API APickupItem : public AItem
 public:
 	APickupItem();
 
+protected:
+
+	virtual void BeginPlay() override;
+
+public:
+
 	virtual void UseItem() override;
 
 	//amount of stats to boost
@@ -34,4 +40,5 @@ public:
 	// 0: health, 1: food, 2: water
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup")
 		EPickupType boostType;
+
 };

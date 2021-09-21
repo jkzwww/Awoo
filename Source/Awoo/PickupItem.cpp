@@ -20,6 +20,15 @@ APickupItem::APickupItem()
 
 }
 
+
+// Called when the game starts or when spawned
+void APickupItem::BeginPlay()
+{
+	Super::BeginPlay();
+	
+}
+
+
 //specific function when item used by player
 void APickupItem::UseItem()
 {

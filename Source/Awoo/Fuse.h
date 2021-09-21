@@ -38,4 +38,10 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "Usage")
 		FFuseEventDispatcher PowerEvent;
 
+
+	//materials
+	UPROPERTY(EditAnywhere)
+		UMaterialInterface* Material;
+
+	UMaterialInstanceDynamic* matInstance;
 };

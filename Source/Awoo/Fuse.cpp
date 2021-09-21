@@ -13,7 +13,6 @@ AFuse::AFuse()
 	ItemName = FString(TEXT("Fuse"));
 	ItemDesc = FString(TEXT("Some copper wires wrapped with rubbber./nMight be able to power something."));
 
-
 }
 
 
@@ -22,6 +21,15 @@ void AFuse::BeginPlay()
 {
 	Super::BeginPlay();
 
+	//get material
+	Material = BaseMesh->GetMaterial(0);
+	matInstance = BaseMesh->CreateDynamicMaterialInstance(0, Material);
+
+	//set color for fuse
+	if (matInstance)
+	{
+		matInstance->SetVectorParameterValue("ItemColor", FLinearColor(0.766667, 0.263344, 0.058910)); //orange
+	}
 }
 
 // Called every frame
