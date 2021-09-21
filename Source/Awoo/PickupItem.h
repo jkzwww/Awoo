@@ -9,6 +9,13 @@
 /**
  * 
  */
+UENUM(BlueprintType)
+enum class EPickupType : uint8 {
+	PT_HEALTH      UMETA(DisplayName = "health"),
+	PT_FOOD       UMETA(DisplayName = "food"),
+	PT_WATER	 UMETA(DisplayName = "water"),
+};
+
 UCLASS()
 class AWOO_API APickupItem : public AItem
 {
@@ -26,5 +33,5 @@ public:
 	//type of stat to boost
 	// 0: health, 1: food, 2: water
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup")
-		int boostType;
+		EPickupType boostType;
 };

@@ -15,7 +15,7 @@ APickupItem::APickupItem()
 	ItemHowTo = FString(TEXT("Press C to collect\nPress R to consume instantly\nPress E to equip"));
 
 	//default values
-	boostType = 0;
+	boostType = EPickupType::PT_HEALTH;
 	boostValue = 20;
 
 }
@@ -32,7 +32,7 @@ void APickupItem::UseItem()
 
 		switch (boostType)
 		{
-		case 0: //health type pick up
+		case  EPickupType::PT_HEALTH: //health type pick up
 			gameChar->health += boostValue;
 
 			if (gameChar->health > gameChar->maxHealth)
@@ -44,7 +44,7 @@ void APickupItem::UseItem()
 
 			break;
 
-		case 1: //food type pick up
+		case EPickupType::PT_FOOD: //food type pick up
 			gameChar->hunger += boostValue;
 
 			if (gameChar->hunger > gameChar->maxHunger)
@@ -56,7 +56,7 @@ void APickupItem::UseItem()
 
 			break;
 
-		case 2:
+		case EPickupType::PT_WATER:
 			gameChar->hydration += boostValue;
 
 			if (gameChar->hydration > gameChar->maxHydration)
