@@ -25,10 +25,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Interact")
 		class UStaticMeshComponent* BaseMesh;
 
-	//z location when unlocked
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Interact")
-		float Zoffset;
-
 	//key which open this switch
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pairing")
 		ADoorKey* myKey;

@@ -27,6 +27,7 @@ void APowerBox::BeginPlay()
 	if (myFuse)
 	{
 		myFuse->PowerEvent.AddDynamic(this, &APowerBox::OnPower);
+		myFuse->PowerBoxLoc = GetActorLocation();
 	}
 
 }

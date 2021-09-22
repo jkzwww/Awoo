@@ -17,7 +17,7 @@ ALockedSwitch::ALockedSwitch()
 
 	//default values
 	isLocked = true;
-	Zoffset = 0;
+
 }
 
 // Called when the game starts or when spawned
@@ -53,9 +53,6 @@ void ALockedSwitch::Tick(float DeltaTime)
 
 	if (!isLocked)
 	{
-		//SetActorRotation(FMath::Lerp(GetActorRotation(), FRotator(0, -90, 0), 0.05f));
-		SetActorLocation(FMath::Lerp(GetActorLocation(), FVector(GetActorLocation().X, GetActorLocation().Y, Zoffset), 0.05f));
-
 		//set material parameter
 		if (matInstance)
 		{

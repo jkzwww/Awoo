@@ -13,9 +13,6 @@ AButtonSwitch::AButtonSwitch()
 	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BaseMesh"));
 	RootComponent = BaseMesh;
 
-	//TriggerVolume = CreateDefaultSubobject<UBoxComponent>(TEXT("Trigger Volume"));
-	//TriggerVolume->SetupAttachment(BaseMesh);
-
 	//default values
 	isMyEventBound = false;
 	isPressed = false;
@@ -27,12 +24,6 @@ void AButtonSwitch::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	defaultLocation = GetActorLocation();
-
-	////bind function
-	//TriggerVolume->OnComponentBeginOverlap.AddDynamic(this, &AButtonSwitch::OnBoxOverlapBegin);
-
-
 	//get material
 	Material = BaseMesh->GetMaterial(0);
 	matInstance = BaseMesh->CreateDynamicMaterialInstance(0, Material);
@@ -47,8 +38,6 @@ void AButtonSwitch::Tick(float DeltaTime)
 
 	if (isPressed)
 	{
-		SetActorLocation(FMath::Lerp(GetActorLocation(), FVector(GetActorLocation().X, GetActorLocation().Y, Zoffset), 0.05f));
-
 
 		if (matInstance)
 		{
@@ -57,7 +46,6 @@ void AButtonSwitch::Tick(float DeltaTime)
 	}
 	else
 	{
-		SetActorLocation(FMath::Lerp(GetActorLocation(), FVector(defaultLocation), 0.05f));
 
 		if (matInstance)
 		{
@@ -67,23 +55,6 @@ void AButtonSwitch::Tick(float DeltaTime)
 
 
 }
-
-//overlap to trigger switch
-//altered approach due to unreal detecting overlap twice
-//void AButtonSwitch::OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-//{
-//	if (OtherActor && OtherActor != this)//not with itself
-//	{
-//		
-//		//check if player overlap
-//		if (Cast<AAwooCharacter>(OtherActor))
-//		{
-//			ToggleLightEvent.Broadcast();
-//			UE_LOG(LogTemp, Warning, TEXT("Overlap has begun"));
-//		}
-//		
-//	}
-//}
 
 
 void AButtonSwitch::ButtonPressed()

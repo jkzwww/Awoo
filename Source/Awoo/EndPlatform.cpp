@@ -29,10 +29,10 @@ void AEndPlatform::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	//self rotate
-	FRotator Rotator(0, RotationSpeed * DeltaTime, 0);
-	FQuat RotationQuaternion(Rotator);
+	////self rotate
+	//FRotator Rotator(0, RotationSpeed * DeltaTime, 0);
+	//FQuat RotationQuaternion(Rotator);
 
-	AddActorLocalRotation(RotationQuaternion, false, nullptr, ETeleportType::None);
+	//AddActorLocalRotation(RotationQuaternion, false, nullptr, ETeleportType::None);
 }
 

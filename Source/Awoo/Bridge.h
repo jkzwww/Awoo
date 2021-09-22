@@ -17,8 +17,9 @@ class AWOO_API ABridge : public AActor
 	
 public:	
 
-	UPROPERTY(EditAnywhere)
-		UStaticMeshComponent* VisibleComponent;
+	//Base Mesh
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Interact")
+		class UStaticMeshComponent* VisibleComponent;
 
 	// Sets default values for this actor's properties
 	ABridge();

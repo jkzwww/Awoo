@@ -9,16 +9,16 @@ ABridge::ABridge()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root Component"));
+	//RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root Component"));
 	VisibleComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Visible Component"));
-	VisibleComponent->SetupAttachment(RootComponent);
+	RootComponent = VisibleComponent;
 
 	//set mesh
-	ConstructorHelpers::FObjectFinder<UStaticMesh> CubeObject(TEXT("/Game/StarterContent/Shapes/Shape_Cube.Shape_Cube"));
-	if (CubeObject.Succeeded())
-	{
-		VisibleComponent->SetStaticMesh(CubeObject.Object);
-	}
+	//ConstructorHelpers::FObjectFinder<UStaticMesh> CubeObject(TEXT("/Game/StarterContent/Shapes/Shape_Cube.Shape_Cube"));
+	//if (CubeObject.Succeeded())
+	//{
+	//	VisibleComponent->SetStaticMesh(CubeObject.Object);
+	//}
 
 	//default values
 	isActivated = false;

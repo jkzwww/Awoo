@@ -27,23 +27,11 @@ public:
 		class UStaticMeshComponent* BaseMesh;
 
 	UPROPERTY(EditAnywhere, Category = "Interact")
-		FVector defaultLocation;
-
-	//z location when unlocked
-	UPROPERTY(EditAnywhere,Category = "Interact")
-		float Zoffset;
-
-	UPROPERTY(EditAnywhere, Category = "Interact")
 		float pushDistance;
-	//UPROPERTY(EditAnywhere)
-	//	UBoxComponent* TriggerVolume;
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	//UFUNCTION()
-	//	void OnBoxOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	AAwooCharacter* gameChar;
 
