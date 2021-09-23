@@ -30,6 +30,10 @@ void APowerBox::BeginPlay()
 		myFuse->PowerBoxLoc = GetActorLocation();
 	}
 
+	//get material
+	Material = BaseMesh->GetMaterial(0);
+	matInstance = BaseMesh->CreateDynamicMaterialInstance(0, Material);
+
 }
 
 // Called every frame
@@ -51,6 +55,15 @@ void APowerBox::Interact_Implementation(AActor* target)
 		if (isPowered)
 		{
 			gameChar->MessageString = FString(TEXT("Power ON.Switch attached unlocked."));
+
+			//set parameters when powered
+			if (matInstance)
+			{
+				matInstance->SetScalarParameterValue("isPowered", 1);
+				matInstance->SetScalarParameterValue("StartPanner", 0.5);
+
+			}
+
 		}
 		else
 		{

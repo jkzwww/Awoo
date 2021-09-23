@@ -51,4 +51,10 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category = "Activate")
 		FPowerEventDispatcher PowerSwitchEvent;
+
+	//materials
+	UPROPERTY(EditAnywhere)
+		UMaterialInterface* Material;
+
+	UMaterialInstanceDynamic* matInstance;
 };
