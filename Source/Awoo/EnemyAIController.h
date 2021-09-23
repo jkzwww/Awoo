@@ -53,12 +53,12 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = AI)
 		UAISenseConfig_Sight* SightConfiguration;
 
-	//how long Ai maintain last known position in memory
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = AI)
-		float TouchAge = 1.f;
+	////how long Ai maintain last known position in memory
+	//UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = AI)
+	//	float TouchAge = 1.f;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = AI)
-		UAISenseConfig_Touch* TouchConfiguration;
+	//UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = AI)
+	//	UAISenseConfig_Touch* TouchConfiguration;
 
 	UNavigationSystemV1* NavigationSystem;
 	APawn* TargetPlayer;

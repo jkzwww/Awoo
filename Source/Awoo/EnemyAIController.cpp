@@ -25,9 +25,9 @@ AEnemyAIController::AEnemyAIController()
 	GetPerceptionComponent()->OnTargetPerceptionUpdated.AddDynamic(this, &AEnemyAIController::OnSensesUpdated);
 
 	//touch sense
-	TouchConfiguration = CreateDefaultSubobject<UAISenseConfig_Touch>(TEXT("Touch Configuration"));
-	TouchConfiguration->SetMaxAge(TouchAge);
-	GetPerceptionComponent()->ConfigureSense(*TouchConfiguration);
+	//TouchConfiguration = CreateDefaultSubobject<UAISenseConfig_Touch>(TEXT("Touch Configuration"));
+	//TouchConfiguration->SetMaxAge(TouchAge);
+	//GetPerceptionComponent()->ConfigureSense(*TouchConfiguration);
 
 	TargetPlayer = nullptr;
 
