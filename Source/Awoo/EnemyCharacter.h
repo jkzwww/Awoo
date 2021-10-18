@@ -2,6 +2,8 @@
 
 #pragma once
 
+
+#include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "CoreMinimal.h"
@@ -51,4 +53,14 @@ public:
 
 	//which point currently in
 	int patrolIndex;
+
+	//whether stunned
+	bool isStun;
+	float myStunTime;
+
+	float stunStartSec;
+	float currentSec;
+
+	UFUNCTION(BlueprintCallable)
+		void updateStun(FVector grenadeLoc, float stunRadius, float stunTime);
 };

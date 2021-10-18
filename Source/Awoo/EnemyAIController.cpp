@@ -69,6 +69,21 @@ void AEnemyAIController::Tick(float DeltaSeconds)
 		BlackboardComponent->SetValueAsVector("PlayerPosition", TargetPlayer->GetActorLocation());
 	}
 
+	AEnemyCharacter* myEnemyChar = Cast<AEnemyCharacter>(GetPawn());
+
+	if (myEnemyChar)
+	{
+		if (myEnemyChar->isStun)
+		{
+			BlackboardComponent->SetValueAsBool("getStun", true);
+		}
+		else
+		{
+			BlackboardComponent->ClearValue("getStun");
+		}
+		
+	}
+
 }
 
 

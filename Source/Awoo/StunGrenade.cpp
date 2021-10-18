@@ -38,30 +38,31 @@ void AStunGrenade::Tick(float DeltaTime)
 	{
 		if (gameChar->ItemEquipped == this)
 		{
-			SetActorLocation(gameChar->GetActorLocation() + offsetLoc);
+			SetActorLocation((gameChar->GetActorForwardVector()* offsetDistance) + gameChar->GetActorLocation());
 		}
 	}
 	
 	//update current second
 	currentSecond = GetWorld()->UWorld::GetRealTimeSeconds();
 
-	if (stunStart && currentSecond - startSecond > stunSec)
-	{
-		stunStart = false;
-
-		Destroy();
-	}
 
 	//activated , stun enemies
 	if (stunStart)
 	{
-		//broadcast stun event
+		if (currentSecond - startSecond > stunSec)
+		{
+			//ParticleFX->Deactivate(false);
+			effect->GetSystemInstance()->Deactivate(false);
+
+			Destroy();
+		}
 	}
 
+	//start aiming
 	if (finishAim)
 	{
 		//draw debug lines
-		DrawDebugSphere(GetWorld(), GetActorLocation(), stunRadius, 26, FColor(181, 0, 0), false, 1, 0, 2);
+		DrawDebugSphere(GetWorld(), GetActorLocation(), stunRadius, 26, FColor(181, 0, 0), false, 0.05, 0, 2);
 	}
 
 }
@@ -74,26 +75,35 @@ void AStunGrenade::UseItem()
 	if (finishAim)
 	{
 	
-		//spawn particle system
-		ParticleFX = LoadObject<UNiagaraSystem>(nullptr, TEXT("NiagaraSystem'/Game/NiagaraFX/spriteEffect/smokeSystem.smokeSystem'"), nullptr, LOAD_None, nullptr);
+		//spawn niagara system
+		//ParticleFX = LoadObject<UNiagaraSystem>(nullptr, TEXT("NiagaraSystem'/Game/NiagaraFX/spriteEffect/smokeSystem.smokeSystem'"), nullptr, LOAD_None, nullptr);
 
-		UNiagaraComponent* effect = UNiagaraFunctionLibrary::SpawnSystemAtLocation(
-			GetWorld(),
-			ParticleFX,
-			GetActorLocation(), //position
-			FRotator(1),
-			FVector(0.05, 0.05, 0.05), //scale
-			true,
-			true,
-			ENCPoolMethod::AutoRelease,
-			true);
+		if (ParticleFX)
+		{
+			effect = UNiagaraFunctionLibrary::SpawnSystemAtLocation(
+				GetWorld(),
+				ParticleFX,
+				GetActorLocation(), //position
+				FRotator(1),
+				FVector(1, 1, 1), //scale
+				true,
+				true,
+				ENCPoolMethod::AutoRelease,
+				true);
 
+		}
+		
 		//start effect
 		stunStart = true;
 		startSecond = currentSecond;
 
 		isUsed = true;
 		gameChar->MessageString = FString(TEXT("Smoke grenade placed!Bots nearby stunned!"));
+
+		//broadcast stun event
+		//pass stun parameters
+		StunEvent.Broadcast(GetActorLocation(), stunRadius, stunSec);
+
 	}
 
 	if (!isUsed)

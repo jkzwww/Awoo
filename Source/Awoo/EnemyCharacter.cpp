@@ -18,6 +18,8 @@ AEnemyCharacter::AEnemyCharacter()
 	patrolIndex = 0;
 	ChaseSpeedModifier = 0.8;
 	DamageValue = 5;
+	isStun = false;
+	stunStartSec = 0;
 }
 
 // Called when the game starts or when spawned
@@ -45,6 +47,17 @@ void AEnemyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	//update current second
+	currentSec = GetWorld()->UWorld::GetRealTimeSeconds();
+
+	if (isStun)
+	{
+		if (currentSec - stunStartSec > myStunTime)
+		{
+			isStun = false;
+		}
+	}
+	
 }
 
 // Called to bind functionality to input
@@ -54,3 +67,14 @@ void AEnemyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 
 }
 
+void AEnemyCharacter::updateStun(FVector grenadeLoc, float stunRadius, float stunTime)
+{
+	if (FVector::Dist(GetActorLocation(), grenadeLoc) < stunRadius)
+	{
+		isStun = true;
+
+		myStunTime = stunTime;
+
+		stunStartSec = currentSec;
+	}
+}

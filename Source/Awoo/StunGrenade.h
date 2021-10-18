@@ -11,12 +11,16 @@
 #include "NiagaraComponent.h"
 #include "NiagaraFunctionLibrary.h"
 #include "NiagaraSystem.h"
+#include "NiagaraSystemInstance.h"
 
 #include "StunGrenade.generated.h"
 
 /**
  * 
  */
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FStunEventDispatcher,FVector,grenadeLoc,float,stunRadius,float,stunTime);
+
 UCLASS()
 class AWOO_API AStunGrenade : public AItem
 {
@@ -38,11 +42,13 @@ public:
 
 	//location offset from player
 	UPROPERTY(EditAnywhere)
-		FVector offsetLoc;
+		float offsetDistance;
 
-	//smoke particle system
+	//niagara system
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UNiagaraSystem* ParticleFX;
+
+	UNiagaraComponent* effect;
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -59,5 +65,7 @@ protected:
 
 	bool finishAim;
 
-	
+	//event dispatcher
+	UPROPERTY(BlueprintAssignable, Category = "Usage")
+		FStunEventDispatcher StunEvent;
 };
