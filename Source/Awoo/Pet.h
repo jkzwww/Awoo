@@ -75,6 +75,10 @@ public:
 	UPROPERTY(EditAnywhere)
 		float runDistance;
 
+	//heal rate
+	UPROPERTY(EditAnywhere)
+		float healRate;
+
 	//materials
 	UPROPERTY(EditAnywhere, Category = "Material")
 		UMaterialInterface* Material;

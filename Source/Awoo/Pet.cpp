@@ -20,6 +20,7 @@ APet::APet()
 	skillTime = 7;
 	speed = 2;
 	followDist = 30;
+	healRate = 0.2;
 }
 
 // Called when the game starts or when spawned
@@ -58,6 +59,7 @@ void APet::Tick(float DeltaTime)
 		{
 		case EPetState::PET_FOLLOW:
 
+			//if not too close , follow up
 			if (FVector::Dist(myOwner->GetActorLocation(), GetActorLocation()) > followDist)
 			{
 				toTarget = myOwner->GetActorLocation() - GetActorLocation();
@@ -66,15 +68,51 @@ void APet::Tick(float DeltaTime)
 				BaseMesh->SetRelativeLocation(GetActorLocation() + toTarget);
 			}
 			break;
+
+
 		case EPetState::PET_ATTRACT:
 			//broadcast charm event
+			//send pet location
+
 			break;
+
 		case EPetState::PET_HEAL:
 			//increase owner hp
+
+			if (currentSec - startSec < skillTime)
+			{
+				if ((myOwner->health + healRate) < myOwner->maxHealth)
+				{
+					myOwner->health += healRate;
+
+				}
+			}
+			else
+			{
+				myState = EPetState::PET_FOLLOW;
+			}
+
+			//heal effect
+			
 			break;
+
+
 		case EPetState::PET_SHIELD:
 			//add shield to owner
+			if (currentSec - startSec < skillTime)
+			{
+				myOwner->isProtected = true;
+			}
+			else
+			{
+				myOwner->isProtected = false;
+				myState = EPetState::PET_FOLLOW;
+			}
+
+			//shield effect
+			
 			break;
+		
 		default:
 			break;
 		}
@@ -100,6 +138,9 @@ void APet::Interact_Implementation(AActor* target)
 
 			myState = EPetState::PET_FOLLOW;
 			myPhase = EPetPhase::PET_HUNGRY;
+
+			//bind skill events
+			myOwner->PetSkillEvent.AddDynamic(this, &APet::useSkill);
 		}
 
 	}
@@ -120,16 +161,24 @@ void APet::getFood()
 		case 1:
 			myPhase = EPetPhase::PET_HEALTHY;
 			myOwner->MessageString = FString(TEXT("Pet : I feel better!Attraction skill unlocked!"));
+
+			//change material param
+
 			break;
 
 		case 3:
 			myPhase = EPetPhase::PET_HAPPY;
 			myOwner->MessageString = FString(TEXT("Pet : Yum!!Sniff skill unlocked!"));
+
+			//change material param
+
 			break;
 
 		case 5:
 			myPhase = EPetPhase::PET_ENERGY;
 			myOwner->MessageString = FString(TEXT("Pet : Awoo!!Shield skill unlocked!"));
+
+			//change material param
 
 		default:
 			myOwner->MessageString = FString(TEXT("Pet : woof!"));
@@ -166,6 +215,7 @@ void APet::useSkill(int skill)
 			else
 			{
 				myState = EPetState::PET_ATTRACT;
+				myOwner->MessageString = FString(TEXT("See them charmed by me!!"));
 			}
 
 			break;
@@ -178,6 +228,7 @@ void APet::useSkill(int skill)
 			else
 			{
 				myState = EPetState::PET_HEAL;
+				myOwner->MessageString = FString(TEXT("Don't worry, I'll give you my power!"));
 			}
 
 			break;
@@ -189,6 +240,7 @@ void APet::useSkill(int skill)
 			else
 			{
 				myState = EPetState::PET_SHIELD;
+				myOwner->MessageString = FString(TEXT("Go ahead, I'll protect you!"));
 			}
 
 			break;

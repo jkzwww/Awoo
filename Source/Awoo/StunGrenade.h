@@ -19,7 +19,7 @@
 /**
  * 
  */
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FStunTestEventDispatcher);
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FStunEventDispatcher,FVector,grenadeLoc,float,stunTime,float,stunRadius);
 
 UCLASS()
@@ -54,16 +54,10 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	//// declare overlap begin function
-	//UFUNCTION()
-	//	void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
 	//event dispatcher
 	UPROPERTY(BlueprintAssignable)
 		FStunEventDispatcher StunEvent;
 
-	UPROPERTY(BlueprintAssignable)
-		FStunTestEventDispatcher MyTestEvent;
 
 protected:
 	// Called when the game starts or when spawned
@@ -77,6 +71,4 @@ protected:
 
 	bool finishAim;
 
-	//trigger component
-	USphereComponent* TriggerSphere;
 };

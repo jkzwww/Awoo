@@ -66,7 +66,7 @@ void AEnemyCharacter::Tick(float DeltaTime)
 
 	if (isStun)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("enemy now stunned!!"));
+		
 		if (currentSec - stunStartSec > myStunTime)
 		{
 			isStun = false;
@@ -91,6 +91,8 @@ void AEnemyCharacter::updateStun(FVector grenadeLoc, float stunTime, float stunR
 		myStunTime = stunTime;
 
 		stunStartSec = currentSec;
+
+		UE_LOG(LogTemp, Warning, TEXT("enemy now stunned!!"));
 	}
 	else
 	{

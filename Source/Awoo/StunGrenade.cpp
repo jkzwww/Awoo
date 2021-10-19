@@ -10,15 +10,6 @@ AStunGrenade::AStunGrenade()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	//sphere trigger component
-	//TriggerSphere = CreateDefaultSubobject<USphereComponent>(TEXT("TriggerSphere"));
-	//TriggerSphere->InitSphereRadius(stunRadius);
-	//TriggerSphere->SetCollisionProfileName(TEXT("Trigger"));
-	//TriggerSphere->SetupAttachment(RootComponent);
-
-	//TriggerSphere->OnComponentBeginOverlap.AddDynamic(this, &AStunGrenade::OnOverlapBegin);
-
-
 	//default name and desc
 	ItemName = FString(TEXT("Smoke Grenade"));
 	ItemDesc = FString(TEXT("Release poisonous smoke to stun enemies"));
@@ -59,15 +50,12 @@ void AStunGrenade::Tick(float DeltaTime)
 	//check to end stun
 	if (stunStart)
 	{
-		MyTestEvent.Broadcast();
-
+	
 		if (currentSecond - startSecond > stunSec)
 		{
 			stunStart = false;
 
-			//StunEvent.Broadcast(stunStart);
-
-			//ParticleFX->Deactivate(false);
+			//stop niagara system
 			effect->GetSystemInstance()->Deactivate(false);
 
 			Destroy();
@@ -87,7 +75,7 @@ void AStunGrenade::Tick(float DeltaTime)
 //specific function when item used by player
 void AStunGrenade::UseItem()
 {
-	UE_LOG(LogTemp, Warning, TEXT("use grenade!!"));
+	//UE_LOG(LogTemp, Warning, TEXT("use grenade!!"));
 	
 	if (finishAim)
 	{
@@ -136,17 +124,3 @@ void AStunGrenade::UseItem()
 	}
 }
 
-//
-// declare overlap begin function
-//void AStunGrenade::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-//{
-//
-//	AEnemyCharacter* myEnemyChar = Cast<AEnemyCharacter>(OtherActor);
-//
-//	if (myEnemyChar)
-//	{
-//		myEnemyChar->isStun = stunStart;
-//		UE_LOG(LogTemp, Warning, TEXT("enemy overlap grenade!!"));
-//	}
-//
-//}

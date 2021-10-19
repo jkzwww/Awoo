@@ -36,6 +36,7 @@ AAwooCharacter::AAwooCharacter()
 	maxHunger = 100;
 	maxHydration = 100;
 	InvSlotsNum = 15;
+	isProtected = false;
 
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(55.f, 96.0f);
@@ -181,6 +182,12 @@ void AAwooCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerInpu
 
 	//bind flip
 	PlayerInputComponent->BindAction("Flip", IE_Pressed, this, &AAwooCharacter::FlipASwitch);
+
+	//bind pet skills
+	PlayerInputComponent->BindAction("Charm", IE_Pressed, this, &AAwooCharacter::ReleaseSkill<ESkillType::CHARM>);
+	PlayerInputComponent->BindAction("Heal", IE_Pressed, this, &AAwooCharacter::ReleaseSkill<ESkillType::HEAL>);
+	PlayerInputComponent->BindAction("Shield", IE_Pressed, this, &AAwooCharacter::ReleaseSkill<ESkillType::SHIELD>);
+
 }
 
 void AAwooCharacter::OnFire()
@@ -377,7 +384,7 @@ void AAwooCharacter::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, c
 		//check overlap with enemy
 		AEnemyCharacter* myEnemy = Cast<AEnemyCharacter>(OtherActor);
 
-		if (myEnemy)
+		if (myEnemy && !isProtected)
 		{
 			//player attacked
 			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Touched by enemy!!!"));
@@ -697,4 +704,34 @@ void AAwooCharacter::pauseGame()
 void AAwooCharacter::FlipASwitch()
 {
 	FlipSwitchEvent.Broadcast();
+}
+
+
+//choose skill
+void AAwooCharacter::ReleaseSkill(ESkillType mySkill)
+{
+	switch (mySkill)
+	{
+
+	case ESkillType::CHARM:
+	{
+		PetSkillEvent.Broadcast(1);
+		break;
+	}
+
+	case ESkillType::HEAL:
+	{
+		PetSkillEvent.Broadcast(2);
+		break;
+	}
+
+	case ESkillType::SHIELD:
+	{
+		PetSkillEvent.Broadcast(3);
+		break;
+	}
+
+	}
+
+	DisplayMessageEvent.Broadcast(MessageString);
 }

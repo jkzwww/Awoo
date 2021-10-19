@@ -22,9 +22,17 @@ class UMotionControllerComponent;
 class UAnimMontage;
 class USoundBase;
 
+enum class ESkillType : uint8
+{
+	CHARM,
+	HEAL,
+	SHIELD
+};
+
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~event dispatcher~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMyEventDispatcher, bool, isWinning);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSkillEventDispatcher, int, skillNum);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FInfoEventDispatcher, FString, name,FString,desc,FString,howTo);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMessageDispatcher, FString, myMessage);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FFlipEventDispatcher);
@@ -222,6 +230,9 @@ public:
 	//my pet
 	APet* myPet;
 
+	//shield
+	bool isProtected;
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~function declare~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	//game state variables mutator
@@ -269,7 +280,17 @@ public:
 
 	void Consume();
 
+	//switch related
 	void FlipASwitch();
+
+
+	//pet related
+	//handle skill release
+	void ReleaseSkill(ESkillType mySkill);
+
+	//templated version
+	template<ESkillType mySkill>
+	void ReleaseSkill() { ReleaseSkill(mySkill); }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~event~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	UPROPERTY(BlueprintAssignable, Category = "GameState")
@@ -283,5 +304,9 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category = "Switches")
 		FFlipEventDispatcher FlipSwitchEvent;
+
+	UPROPERTY(BlueprintAssignable, Category = "Skills")
+		FSkillEventDispatcher PetSkillEvent;
+	
 };
 
