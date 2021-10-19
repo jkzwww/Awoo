@@ -642,9 +642,9 @@ void AAwooCharacter::UseEquipItem()
 			ItemEquipped = nullptr;
 		}
 
+		DisplayMessageEvent.Broadcast(MessageString);
 	}
 
-	DisplayMessageEvent.Broadcast(MessageString);
 
 }
 

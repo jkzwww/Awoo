@@ -6,6 +6,7 @@
 #include "Components/SphereComponent.h"
 #include "CoreMinimal.h"
 #include "Item.h"
+#include "EnemyCharacter.h"
 
 //niagara specific header
 #include "NiagaraComponent.h"
@@ -18,8 +19,8 @@
 /**
  * 
  */
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FStunEventDispatcher,FVector,grenadeLoc,float,stunRadius,float,stunTime);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FStunTestEventDispatcher);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FStunEventDispatcher,FVector,grenadeLoc,float,stunTime,float,stunRadius);
 
 UCLASS()
 class AWOO_API AStunGrenade : public AItem
@@ -53,6 +54,17 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	//// declare overlap begin function
+	//UFUNCTION()
+	//	void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	//event dispatcher
+	UPROPERTY(BlueprintAssignable)
+		FStunEventDispatcher StunEvent;
+
+	UPROPERTY(BlueprintAssignable)
+		FStunTestEventDispatcher MyTestEvent;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -65,7 +77,6 @@ protected:
 
 	bool finishAim;
 
-	//event dispatcher
-	UPROPERTY(BlueprintAssignable, Category = "Usage")
-		FStunEventDispatcher StunEvent;
+	//trigger component
+	USphereComponent* TriggerSphere;
 };

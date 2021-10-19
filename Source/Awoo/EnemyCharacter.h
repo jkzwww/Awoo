@@ -55,12 +55,14 @@ public:
 	int patrolIndex;
 
 	//whether stunned
-	bool isStun;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Attack")
+		bool isStun;
+
 	float myStunTime;
 
 	float stunStartSec;
 	float currentSec;
 
 	UFUNCTION(BlueprintCallable)
-		void updateStun(FVector grenadeLoc, float stunRadius, float stunTime);
+		void updateStun(FVector grenadeLoc,float stunTime,float stunRadius);
 };

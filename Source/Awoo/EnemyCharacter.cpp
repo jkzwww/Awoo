@@ -52,6 +52,7 @@ void AEnemyCharacter::Tick(float DeltaTime)
 
 	if (isStun)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("enemy now stunned!!"));
 		if (currentSec - stunStartSec > myStunTime)
 		{
 			isStun = false;
@@ -67,7 +68,7 @@ void AEnemyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 
 }
 
-void AEnemyCharacter::updateStun(FVector grenadeLoc, float stunRadius, float stunTime)
+void AEnemyCharacter::updateStun(FVector grenadeLoc, float stunTime, float stunRadius)
 {
 	if (FVector::Dist(GetActorLocation(), grenadeLoc) < stunRadius)
 	{
@@ -76,5 +77,9 @@ void AEnemyCharacter::updateStun(FVector grenadeLoc, float stunRadius, float stu
 		myStunTime = stunTime;
 
 		stunStartSec = currentSec;
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("enemy too far from stun grenade!!"));
 	}
 }

@@ -73,8 +73,11 @@ void AEnemyAIController::Tick(float DeltaSeconds)
 
 	if (myEnemyChar)
 	{
+
+		//UE_LOG(LogTemp, Warning, TEXT("pawn found!!"));
 		if (myEnemyChar->isStun)
 		{
+			UE_LOG(LogTemp, Warning, TEXT("enemy now stunned!!"));
 			BlackboardComponent->SetValueAsBool("getStun", true);
 		}
 		else

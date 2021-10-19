@@ -8,6 +8,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Interactable.h"
 #include "Item.h"
+#include "Pet.h"
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
@@ -217,6 +218,9 @@ public:
 	//inventory slots available
 	UPROPERTY(EditAnywhere, Category = "Item")
 		int InvSlotsNum;
+
+	//my pet
+	APet* myPet;
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~function declare~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

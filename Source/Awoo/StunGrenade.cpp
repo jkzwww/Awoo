@@ -10,6 +10,15 @@ AStunGrenade::AStunGrenade()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	//sphere trigger component
+	//TriggerSphere = CreateDefaultSubobject<USphereComponent>(TEXT("TriggerSphere"));
+	//TriggerSphere->InitSphereRadius(stunRadius);
+	//TriggerSphere->SetCollisionProfileName(TEXT("Trigger"));
+	//TriggerSphere->SetupAttachment(RootComponent);
+
+	//TriggerSphere->OnComponentBeginOverlap.AddDynamic(this, &AStunGrenade::OnOverlapBegin);
+
+
 	//default name and desc
 	ItemName = FString(TEXT("Smoke Grenade"));
 	ItemDesc = FString(TEXT("Release poisonous smoke to stun enemies"));
@@ -46,11 +55,17 @@ void AStunGrenade::Tick(float DeltaTime)
 	currentSecond = GetWorld()->UWorld::GetRealTimeSeconds();
 
 
-	//activated , stun enemies
+	//check to end stun
 	if (stunStart)
 	{
+		MyTestEvent.Broadcast();
+
 		if (currentSecond - startSecond > stunSec)
 		{
+			stunStart = false;
+
+			//StunEvent.Broadcast(stunStart);
+
 			//ParticleFX->Deactivate(false);
 			effect->GetSystemInstance()->Deactivate(false);
 
@@ -71,6 +86,7 @@ void AStunGrenade::Tick(float DeltaTime)
 //specific function when item used by player
 void AStunGrenade::UseItem()
 {
+	UE_LOG(LogTemp, Warning, TEXT("use grenade!!"));
 	
 	if (finishAim)
 	{
@@ -97,12 +113,15 @@ void AStunGrenade::UseItem()
 		stunStart = true;
 		startSecond = currentSecond;
 
-		isUsed = true;
-		gameChar->MessageString = FString(TEXT("Smoke grenade placed!Bots nearby stunned!"));
-
+	
 		//broadcast stun event
 		//pass stun parameters
-		StunEvent.Broadcast(GetActorLocation(), stunRadius, stunSec);
+		StunEvent.Broadcast(GetActorLocation(), stunSec, stunRadius);
+	
+		gameChar->MessageString = FString(TEXT("Smoke grenade placed!Bots nearby stunned!"));
+
+	
+		isUsed = true;
 
 	}
 
@@ -112,5 +131,21 @@ void AStunGrenade::UseItem()
 		gameChar->MessageString = FString(TEXT("move to set grenade location, press Q again to throw"));
 
 		finishAim = true;
+
 	}
 }
+
+//
+// declare overlap begin function
+//void AStunGrenade::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+//{
+//
+//	AEnemyCharacter* myEnemyChar = Cast<AEnemyCharacter>(OtherActor);
+//
+//	if (myEnemyChar)
+//	{
+//		myEnemyChar->isStun = stunStart;
+//		UE_LOG(LogTemp, Warning, TEXT("enemy overlap grenade!!"));
+//	}
+//
+//}
