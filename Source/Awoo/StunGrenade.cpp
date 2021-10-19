@@ -35,6 +35,7 @@ AStunGrenade::AStunGrenade()
 void AStunGrenade::BeginPlay()
 {
 	Super::BeginPlay();
+
 }
 
 // Called every frame

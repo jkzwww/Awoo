@@ -2,7 +2,7 @@
 
 #pragma once
 
-
+#include "StunGrenade.h"
 #include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/CharacterMovementComponent.h"

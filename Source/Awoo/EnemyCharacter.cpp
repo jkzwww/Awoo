@@ -40,6 +40,20 @@ void AEnemyCharacter::BeginPlay()
 
 		UE_LOG(LogTemp, Warning, TEXT("player speed found!"));
 	}
+
+	//bind event
+	TArray<AActor*>foundGrenade;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AStunGrenade::StaticClass(), foundGrenade);
+
+	for (AActor* actorRef : foundGrenade)
+	{
+		AStunGrenade* tempGrenade = Cast<AStunGrenade>(actorRef);
+
+		if (tempGrenade)
+		{
+			tempGrenade->StunEvent.AddDynamic(this, &AEnemyCharacter::updateStun);
+		}
+	}
 }
 
 // Called every frame

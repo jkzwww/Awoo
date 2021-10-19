@@ -3,6 +3,7 @@
 
 #include "Pet.h"
 #include "AwooCharacter.h"
+#include"PetFood.h"
 
 // Sets default values
 APet::APet()
@@ -10,11 +11,15 @@ APet::APet()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BaseMesh"));
+	RootComponent = BaseMesh;
+
 	//default values
 	myFood = 0;
 	skillCD = 15;
 	skillTime = 7;
 	speed = 2;
+	followDist = 30;
 }
 
 // Called when the game starts or when spawned
@@ -22,8 +27,20 @@ void APet::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BaseMesh"));
-	RootComponent = BaseMesh;
+	//bind get food function to pet food items
+	TArray<AActor*>foundFood;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), APetFood::StaticClass(), foundFood);
+
+	for (AActor* foodRef : foundFood)
+	{
+		APetFood* tempFood = Cast<APetFood>(foodRef);
+		
+		if (tempFood)
+		{
+			tempFood->FeedEvent.AddDynamic(this, &APet::getFood);
+		}
+	}
+	
 }
 
 // Called every frame
@@ -40,11 +57,14 @@ void APet::Tick(float DeltaTime)
 		switch (myState)
 		{
 		case EPetState::PET_FOLLOW:
-			toTarget = myOwner->GetActorLocation() - GetActorLocation();
-			toTarget.Normalize();
-			toTarget *= speed;
-			BaseMesh->SetRelativeLocation(GetActorLocation() + toTarget);
 
+			if (FVector::Dist(myOwner->GetActorLocation(), GetActorLocation()) > followDist)
+			{
+				toTarget = myOwner->GetActorLocation() - GetActorLocation();
+				toTarget.Normalize();
+				toTarget *= speed;
+				BaseMesh->SetRelativeLocation(GetActorLocation() + toTarget);
+			}
 			break;
 		case EPetState::PET_ATTRACT:
 			//broadcast charm event

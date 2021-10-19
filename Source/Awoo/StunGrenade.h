@@ -6,7 +6,7 @@
 #include "Components/SphereComponent.h"
 #include "CoreMinimal.h"
 #include "Item.h"
-#include "EnemyCharacter.h"
+
 
 //niagara specific header
 #include "NiagaraComponent.h"

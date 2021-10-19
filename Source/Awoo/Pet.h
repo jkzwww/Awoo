@@ -67,6 +67,10 @@ public:
 	UPROPERTY(EditAnywhere)
 		float speed;
 
+	//follow distance
+	UPROPERTY(EditAnywhere)
+		float followDist;
+
 	//charm distance
 	UPROPERTY(EditAnywhere)
 		float runDistance;
