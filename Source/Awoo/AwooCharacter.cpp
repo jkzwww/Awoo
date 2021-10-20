@@ -389,7 +389,8 @@ void AAwooCharacter::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, c
 			//player attacked
 			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Touched by enemy!!!"));
 			
-			health -= myEnemy->DamageValue;
+			isContacted = true;
+			myDamageRate = myEnemy->DamageValue;
 		}
 
 	}
@@ -400,7 +401,16 @@ void AAwooCharacter::OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, cla
 	if (OtherActor && (OtherActor != this) && OtherComp)
 	{
 		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Overlap End"));
+			//check overlap with enemy
+		AEnemyCharacter* myEnemy = Cast<AEnemyCharacter>(OtherActor);
 
+		if (myEnemy)
+		{
+			//player attacked
+			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Touched by enemy!!!"));
+
+			isContacted = false;
+		}
 	}
 
 
@@ -570,7 +580,14 @@ void AAwooCharacter::Tick(float DeltaTime)
 		{
 			health -= healthDrop;
 		}
+	
+		if (isContacted)
+		{
+			health -= myDamageRate;
+		}
+
 	}
+
 
 
 }

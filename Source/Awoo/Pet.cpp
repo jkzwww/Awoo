@@ -21,6 +21,7 @@ APet::APet()
 	speed = 2;
 	followDist = 30;
 	healRate = 0.2;
+	startSec = 0;
 }
 
 // Called when the game starts or when spawned
@@ -71,9 +72,31 @@ void APet::Tick(float DeltaTime)
 
 
 		case EPetState::PET_ATTRACT:
-			//broadcast charm event
-			//send pet location
+			
+			
+			if (currentSec - startSec < skillTime)
+			{
 
+				//get further from owner and attract enemies
+				if (FVector::Dist(myOwner->GetActorLocation(), GetActorLocation()) > charmDist)
+				{
+					toTarget = myOwner->GetActorLocation() - GetActorLocation();
+					toTarget.Normalize();
+					toTarget *= speed;
+					BaseMesh->SetRelativeLocation(GetActorLocation() + toTarget);
+				}
+
+				//stay and start attracting enemies
+				CharmEvent.Broadcast(true,GetActorLocation());
+			}
+			else
+			{
+				//stop charming back to follow after skill
+				CharmEvent.Broadcast(false,GetActorLocation());
+
+				myState = EPetState::PET_FOLLOW;
+			}
+		
 			break;
 
 		case EPetState::PET_HEAL:
@@ -118,6 +141,12 @@ void APet::Tick(float DeltaTime)
 		}
 	}
 
+	//update HUD
+	if (currentSec - startSec > skillCD)
+	{
+
+	}
+
 }
 
 
@@ -142,6 +171,10 @@ void APet::Interact_Implementation(AActor* target)
 			//bind skill events
 			myOwner->PetSkillEvent.AddDynamic(this, &APet::useSkill);
 		}
+		else
+		{
+			gameChar->MessageString = FString(TEXT(""));
+		}
 
 	}
 }
@@ -160,7 +193,7 @@ void APet::getFood()
 		{
 		case 1:
 			myPhase = EPetPhase::PET_HEALTHY;
-			myOwner->MessageString = FString(TEXT("Pet : I feel better!Attraction skill unlocked!"));
+			myOwner->MessageString = FString(TEXT("Pet : I feel better!Charm skill unlocked!"));
 
 			//change material param
 
@@ -168,7 +201,7 @@ void APet::getFood()
 
 		case 3:
 			myPhase = EPetPhase::PET_HAPPY;
-			myOwner->MessageString = FString(TEXT("Pet : Yum!!Sniff skill unlocked!"));
+			myOwner->MessageString = FString(TEXT("Pet : Yum!!Healing skill unlocked!"));
 
 			//change material param
 
@@ -196,7 +229,7 @@ void APet::getFood()
 void APet::useSkill(int skill)
 {
 	//check CD
-	if (currentSec - startSec < skillCD)
+	if (currentSec - startSec < skillCD && startSec > 0.01)
 	{
 		myOwner->MessageString = FString(TEXT("I'm still preparing..."));
 	}
@@ -215,7 +248,8 @@ void APet::useSkill(int skill)
 			else
 			{
 				myState = EPetState::PET_ATTRACT;
-				myOwner->MessageString = FString(TEXT("See them charmed by me!!"));
+				myOwner->MessageString = FString(TEXT("They'll come for me when you're seen now!"));
+	
 			}
 
 			break;
@@ -240,7 +274,7 @@ void APet::useSkill(int skill)
 			else
 			{
 				myState = EPetState::PET_SHIELD;
-				myOwner->MessageString = FString(TEXT("Go ahead, I'll protect you!"));
+				myOwner->MessageString = FString(TEXT("Go ahead,you're under my shield!"));
 			}
 
 			break;

@@ -30,6 +30,8 @@ enum class EPetPhase : uint8 {
 
 class AAwooCharacter;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FCharmEventDispatcher,bool,isCharm,FVector,myLoc);
+
 UCLASS()
 class AWOO_API APet : public AActor, public IInteractable
 {
@@ -71,9 +73,9 @@ public:
 	UPROPERTY(EditAnywhere)
 		float followDist;
 
-	//charm distance
+	//charm effect distance
 	UPROPERTY(EditAnywhere)
-		float runDistance;
+		float charmDist;
 
 	//heal rate
 	UPROPERTY(EditAnywhere)
@@ -113,5 +115,7 @@ public:
 	UFUNCTION()
 		void useSkill(int skill);
 
-	void changeState(int skill);
+	UPROPERTY(BlueprintAssignable)
+		FCharmEventDispatcher CharmEvent;
+
 };

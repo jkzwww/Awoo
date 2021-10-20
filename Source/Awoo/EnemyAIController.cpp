@@ -77,13 +77,15 @@ void AEnemyAIController::Tick(float DeltaSeconds)
 		//UE_LOG(LogTemp, Warning, TEXT("pawn found!!"));
 		if (myEnemyChar->isStun)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("enemy now stunned!!"));
+			//UE_LOG(LogTemp, Warning, TEXT("enemy now stunned!!"));
 			BlackboardComponent->SetValueAsBool("getStun", true);
 		}
 		else
 		{
 			BlackboardComponent->ClearValue("getStun");
 		}
+
+		
 		
 	}
 
@@ -126,6 +128,8 @@ void AEnemyAIController::GenerateNewRandomLocation()
 				returnLocation.Location = myEnemy->PatrolLocs[myEnemy->patrolIndex];
 
 			}
+
+
 		}
 
 		/*MoveToLocation(returnLocation.Location);*/
@@ -144,6 +148,9 @@ void AEnemyAIController::OnSensesUpdated(AActor* UpdatedActor, FAIStimulus Stimu
 
 	APawn* TemporaryPawn = Cast<APawn>(UpdatedActor);
 
+	AEnemyCharacter* myEnemyChar = Cast<AEnemyCharacter>(GetPawn());
+
+
 	if (TemporaryPawn && TemporaryPawn->IsPlayerControlled())
 	{
 		if (Stimulus.WasSuccessfullySensed())
@@ -153,6 +160,21 @@ void AEnemyAIController::OnSensesUpdated(AActor* UpdatedActor, FAIStimulus Stimu
 
 			BlackboardComponent->SetValueAsBool("ChasePlayer", true);
 			BlackboardComponent->SetValueAsVector("PlayerPosition", TargetPlayer->GetActorLocation());
+
+			//stops chasing player but pet when charmed
+			if (myEnemyChar)
+			{
+				
+				if (myEnemyChar->isCharmed)
+				{
+					BlackboardComponent->SetValueAsBool("getCharmed", true);
+					BlackboardComponent->SetValueAsVector("PetPosition", myEnemyChar->petLoc);
+				}
+				else
+				{
+					BlackboardComponent->ClearValue("getCharmed");
+				}
+			}
 
 			/*if (Stimulus.Type == sightid)
 			{

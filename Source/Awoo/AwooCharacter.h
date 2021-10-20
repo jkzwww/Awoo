@@ -233,6 +233,10 @@ public:
 	//shield
 	bool isProtected;
 
+	//enemy
+	bool isContacted;
+	float myDamageRate;
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~function declare~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	//game state variables mutator
@@ -282,7 +286,6 @@ public:
 
 	//switch related
 	void FlipASwitch();
-
 
 	//pet related
 	//handle skill release

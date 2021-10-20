@@ -10,6 +10,8 @@
 #include "GameFramework/Character.h"
 #include "EnemyCharacter.generated.h"
 
+//class APet;
+
 UENUM(BlueprintType)
 enum class EEnemyType : uint8 {
 	ET_GUARD      UMETA(DisplayName = "guardian"),
@@ -65,4 +67,15 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void updateStun(FVector grenadeLoc,float stunTime,float stunRadius);
+
+	//whether charmed
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attack")
+		bool isCharmed;
+
+	//pet location
+	FVector petLoc;
+
+	UFUNCTION(BlueprintCallable)
+		void updateCharmStat(bool petCharm,FVector newLoc);
+
 };

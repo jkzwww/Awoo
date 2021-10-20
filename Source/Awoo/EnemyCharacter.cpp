@@ -2,6 +2,7 @@
 
 
 #include "EnemyCharacter.h"
+//#include "Pet.h"
 
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()
@@ -17,9 +18,12 @@ AEnemyCharacter::AEnemyCharacter()
 	//default values
 	patrolIndex = 0;
 	ChaseSpeedModifier = 0.8;
-	DamageValue = 5;
+	DamageValue = 0.5;
+	
 	isStun = false;
 	stunStartSec = 0;
+
+	isCharmed = false;
 }
 
 // Called when the game starts or when spawned
@@ -54,6 +58,19 @@ void AEnemyCharacter::BeginPlay()
 			tempGrenade->StunEvent.AddDynamic(this, &AEnemyCharacter::updateStun);
 		}
 	}
+
+
+	/*TArray<AActor*>foundPets;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), APet::StaticClass(), foundPets);
+
+	APet* worldPet = Cast<APet>(foundPets[0]);
+
+	if (worldPet)
+	{
+		worldPet->CharmEvent.AddDynamic(this, &AEnemyCharacter::updateCharmStat);
+	}*/
+
+
 }
 
 // Called every frame
@@ -82,6 +99,8 @@ void AEnemyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 
 }
 
+
+//track stun stat
 void AEnemyCharacter::updateStun(FVector grenadeLoc, float stunTime, float stunRadius)
 {
 	if (FVector::Dist(GetActorLocation(), grenadeLoc) < stunRadius)
@@ -98,4 +117,14 @@ void AEnemyCharacter::updateStun(FVector grenadeLoc, float stunTime, float stunR
 	{
 		UE_LOG(LogTemp, Warning, TEXT("enemy too far from stun grenade!!"));
 	}
+}
+
+
+//track charm stat
+void AEnemyCharacter::updateCharmStat(bool petCharm,FVector newLoc)
+{
+
+	isCharmed = petCharm;
+	petLoc = newLoc;
+
 }
