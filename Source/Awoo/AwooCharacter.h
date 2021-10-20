@@ -294,6 +294,10 @@ public:
 	//templated version
 	template<ESkillType mySkill>
 	void ReleaseSkill() { ReleaseSkill(mySkill); }
+
+	//damage related
+	void ReceiveDamage(float damageRate);
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~event~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	UPROPERTY(BlueprintAssignable, Category = "GameState")

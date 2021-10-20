@@ -555,6 +555,8 @@ void AAwooCharacter::ProcessTraceHit(FHitResult& HitOut)
 	}
 }
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~TICK~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 void AAwooCharacter::Tick(float DeltaTime) 
 { 
 	Super::Tick(DeltaTime); 
@@ -581,9 +583,10 @@ void AAwooCharacter::Tick(float DeltaTime)
 			health -= healthDrop;
 		}
 	
+		//contact damage
 		if (isContacted)
 		{
-			health -= myDamageRate;
+			ReceiveDamage(myDamageRate);
 		}
 
 	}
@@ -591,6 +594,9 @@ void AAwooCharacter::Tick(float DeltaTime)
 
 
 }
+
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~TICK~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 //collect interacting item through key press into inventory
@@ -751,4 +757,11 @@ void AAwooCharacter::ReleaseSkill(ESkillType mySkill)
 	}
 
 	DisplayMessageEvent.Broadcast(MessageString);
+}
+
+
+//get damage
+void AAwooCharacter::ReceiveDamage(float damageRate)
+{
+	health -= damageRate;
 }
