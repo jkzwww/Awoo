@@ -10,7 +10,7 @@
 #include "GameFramework/Character.h"
 #include "EnemyCharacter.generated.h"
 
-//class APet;
+class APet;
 
 UENUM(BlueprintType)
 enum class EEnemyType : uint8 {

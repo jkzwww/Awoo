@@ -85,10 +85,21 @@ void AEnemyAIController::Tick(float DeltaSeconds)
 			BlackboardComponent->ClearValue("getStun");
 		}
 
-		
+
+		if (myEnemyChar->isCharmed)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("enemy now charmed!!"));
+			BlackboardComponent->SetValueAsBool("getCharmed", true);
+			BlackboardComponent->SetValueAsVector("PetPosition", myEnemyChar->petLoc);
+		}
+		else
+		{
+			BlackboardComponent->ClearValue("getCharmed");
+		}
 		
 	}
 
+	
 }
 
 
@@ -161,21 +172,7 @@ void AEnemyAIController::OnSensesUpdated(AActor* UpdatedActor, FAIStimulus Stimu
 			BlackboardComponent->SetValueAsBool("ChasePlayer", true);
 			BlackboardComponent->SetValueAsVector("PlayerPosition", TargetPlayer->GetActorLocation());
 
-			//stops chasing player but pet when charmed
-			if (myEnemyChar)
-			{
-				
-				if (myEnemyChar->isCharmed)
-				{
-					BlackboardComponent->SetValueAsBool("getCharmed", true);
-					BlackboardComponent->SetValueAsVector("PetPosition", myEnemyChar->petLoc);
-				}
-				else
-				{
-					BlackboardComponent->ClearValue("getCharmed");
-				}
-			}
-
+		
 			/*if (Stimulus.Type == sightid)
 			{
 				UE_LOG(LogTemp, Warning, TEXT("target seen!!"));

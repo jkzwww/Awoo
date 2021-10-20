@@ -2,7 +2,7 @@
 
 
 #include "EnemyCharacter.h"
-//#include "Pet.h"
+#include "Pet.h"
 
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()
@@ -60,7 +60,7 @@ void AEnemyCharacter::BeginPlay()
 	}
 
 
-	/*TArray<AActor*>foundPets;
+	TArray<AActor*>foundPets;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), APet::StaticClass(), foundPets);
 
 	APet* worldPet = Cast<APet>(foundPets[0]);
@@ -68,7 +68,9 @@ void AEnemyCharacter::BeginPlay()
 	if (worldPet)
 	{
 		worldPet->CharmEvent.AddDynamic(this, &AEnemyCharacter::updateCharmStat);
-	}*/
+
+		UE_LOG(LogTemp, Warning, TEXT("charm event bound!!"));
+	}
 
 
 }
@@ -111,11 +113,11 @@ void AEnemyCharacter::updateStun(FVector grenadeLoc, float stunTime, float stunR
 
 		stunStartSec = currentSec;
 
-		UE_LOG(LogTemp, Warning, TEXT("enemy now stunned!!"));
+		//UE_LOG(LogTemp, Warning, TEXT("enemy now stunned!!"));
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("enemy too far from stun grenade!!"));
+		//UE_LOG(LogTemp, Warning, TEXT("enemy too far from stun grenade!!"));
 	}
 }
 
