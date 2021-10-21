@@ -16,6 +16,7 @@ UENUM(BlueprintType)
 enum class EEnemyType : uint8 {
 	ET_GUARD      UMETA(DisplayName = "guardian"),
 	ET_SEEK       UMETA(DisplayName = "seeker"),
+	ET_BOMBER	  UMETA(DisplayName = "bomber"),
 };
 
 UCLASS()
@@ -52,6 +53,10 @@ public:
 	//damage value on player when touched
 	UPROPERTY(EditAnywhere, Category = "Attack")
 		float DamageValue;
+
+	//time before bomb explode
+	UPROPERTY(EditAnywhere, Category = "Attack")
+		float BombTime;
 
 	//which point currently in
 	int patrolIndex;

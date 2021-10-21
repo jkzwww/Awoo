@@ -360,12 +360,12 @@ void AAwooCharacter::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, c
 		/*GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Overlap Begin"));*/
 
 		//implement interface if exist
-		if (OtherActor->GetClass()->ImplementsInterface(UInteractable::StaticClass()))
+	/*	if (OtherActor->GetClass()->ImplementsInterface(UInteractable::StaticClass()))
 		{
 		
 				IInteractable::Execute_Interact(OtherActor, this);
 
-		}
+		}*/
 
 		//if overlap with end point platform
 		if (Cast<AEndPlatform>(OtherActor))
