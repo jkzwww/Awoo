@@ -68,6 +68,10 @@ void AEnemyAIController::Tick(float DeltaSeconds)
 	{
 		BlackboardComponent->SetValueAsVector("PlayerPosition", TargetPlayer->GetActorLocation());
 	}
+	else
+	{
+		BlackboardComponent->ClearValue("canBomb");
+	}
 
 	AEnemyCharacter* myEnemyChar = Cast<AEnemyCharacter>(GetPawn());
 
@@ -97,6 +101,8 @@ void AEnemyAIController::Tick(float DeltaSeconds)
 			BlackboardComponent->ClearValue("getCharmed");
 		}
 		
+
+
 	}
 
 	
@@ -172,6 +178,12 @@ void AEnemyAIController::OnSensesUpdated(AActor* UpdatedActor, FAIStimulus Stimu
 			BlackboardComponent->SetValueAsBool("ChasePlayer", true);
 			BlackboardComponent->SetValueAsVector("PlayerPosition", TargetPlayer->GetActorLocation());
 
+
+			if (myEnemyChar->myPatrolType == EEnemyType::ET_BOMBER)
+			{
+				BlackboardComponent->SetValueAsBool("canBomb", true);
+			}
+			
 		
 			/*if (Stimulus.Type == sightid)
 			{
@@ -192,5 +204,22 @@ void AEnemyAIController::OnSensesUpdated(AActor* UpdatedActor, FAIStimulus Stimu
 	}
 
 	//Stimulus.ReceiverLocation == 
+
+}
+
+
+//attack task
+void AEnemyAIController::LaunchBomb()
+{
+	if (TargetPlayer)
+	{
+		AEnemyCharacter* myEnemyChar = Cast<AEnemyCharacter>(GetPawn());
+
+		if (myEnemyChar)
+		{
+			myEnemyChar->BombPlayer(TargetPlayer);
+		}
+
+	}
 
 }

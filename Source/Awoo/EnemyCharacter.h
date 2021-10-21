@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Bomb.h"
 #include "StunGrenade.h"
 #include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
@@ -54,9 +55,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Attack")
 		float DamageValue;
 
-	//time before bomb explode
+	//bomb class to spawn
 	UPROPERTY(EditAnywhere, Category = "Attack")
-		float BombTime;
+		TSubclassOf<class ABomb> ToSpawn;
 
 	//which point currently in
 	int patrolIndex;
@@ -82,5 +83,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void updateCharmStat(bool petCharm,FVector newLoc);
+
+	void BombPlayer(AActor* targetPlayer);
 
 };

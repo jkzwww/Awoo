@@ -8,7 +8,8 @@
 #include "GameFramework/Actor.h"
 #include "Bomb.generated.h"
 
-class AEnemyCharacter;
+
+class AAwooCharacter;
 
 UCLASS()
 class AWOO_API ABomb : public AActor
@@ -42,7 +43,14 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		float bombDelay;
+	
+	//damage radius
+	UPROPERTY(EditAnywhere)
+		float damageRad;
 
+	//damage value
+	UPROPERTY(EditAnywhere)
+		float damageVal;
 
 protected:
 	// Called when the game starts or when spawned
@@ -55,7 +63,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UFUNCTION()
-		void explodeNow();
+	void explodeNow();
 
 };

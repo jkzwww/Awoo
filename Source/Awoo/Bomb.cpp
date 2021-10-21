@@ -2,11 +2,12 @@
 
 
 #include "Bomb.h"
+#include "AwooCharacter.h"
 
 // Sets default values
 ABomb::ABomb()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root Component"));
@@ -23,13 +24,13 @@ ABomb::ABomb()
 void ABomb::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	//update current second
 	if (GetWorld())
 	{
 		startSec = GetWorld()->UWorld::GetRealTimeSeconds();
 	}
-	
+
 
 }
 
@@ -67,10 +68,25 @@ void ABomb::explodeNow()
 	{
 		UGameplayStatics::PlaySoundAtLocation(this, ExplodeSound, GetActorLocation(), 1.0F, 1.0F, 0.0F, nullptr, nullptr);
 	}
-	
+
 	if (BombParticle)
 	{
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), BombParticle, GetActorLocation(), FRotator::ZeroRotator, true);
+	}
+
+	if (target)
+	{
+		FVector TargetDirection = target->GetActorLocation() - GetActorLocation();
+
+		if (TargetDirection.Size() < damageRad)
+		{
+			AAwooCharacter* myChar = Cast<AAwooCharacter>(target);
+
+			if (myChar)
+			{
+				myChar->ReceiveDamage(damageVal);
+			}
+		}
 	}
 
 	Destroy();

@@ -130,3 +130,26 @@ void AEnemyCharacter::updateCharmStat(bool petCharm,FVector newLoc)
 	petLoc = newLoc;
 
 }
+
+
+//bomb
+void AEnemyCharacter::BombPlayer(AActor* targetPlayer)
+{
+	if (targetPlayer && ToSpawn)
+	{
+		UWorld* world = GetWorld();
+
+		if (world)
+		{
+
+			FVector spawnLocation = (GetActorForwardVector() * 20) + GetActorLocation();
+
+			ABomb* myBomb = world->UWorld::SpawnActor<ABomb>(ToSpawn, spawnLocation, FRotator::ZeroRotator);
+
+			myBomb->target = targetPlayer;		
+
+		}
+
+		
+	}
+}

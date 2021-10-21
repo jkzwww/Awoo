@@ -2,6 +2,7 @@
 
 #pragma once
 
+
 #include "NavigationSystem.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
@@ -32,6 +33,8 @@ public:
 	//void OnMoveCompleted(FAIRequestID RequetID, const FPathFollowingResult& Result)override;
 
 	void GenerateNewRandomLocation();
+
+	void LaunchBomb();
 
 	UFUNCTION()
 		void OnSensesUpdated(AActor* UpdatedActor, FAIStimulus Stimulus);
