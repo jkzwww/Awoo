@@ -66,13 +66,10 @@ void AEnemyAIController::Tick(float DeltaSeconds)
 
 	if (TargetPlayer)
 	{
-		BlackboardComponent->SetValueAsVector("PlayerPosition", TargetPlayer->GetActorLocation());
-	}
-	else
-	{
-		BlackboardComponent->ClearValue("canBomb");
-	}
+		BlackboardComponent->SetValueAsVector("PlayerPosition", TargetPlayer->GetActorLocation());	
 
+	}
+	
 	AEnemyCharacter* myEnemyChar = Cast<AEnemyCharacter>(GetPawn());
 
 	if (myEnemyChar)
@@ -102,7 +99,15 @@ void AEnemyAIController::Tick(float DeltaSeconds)
 		}
 		
 
-
+		if (TargetPlayer)
+		{
+			if (FVector::Dist(myEnemyChar->GetActorLocation(), TargetPlayer->GetActorLocation()) > 800)
+			{
+				BlackboardComponent->ClearValue("canBomb");
+				TargetPlayer = nullptr;
+			}
+		}
+	
 	}
 
 	
@@ -175,13 +180,15 @@ void AEnemyAIController::OnSensesUpdated(AActor* UpdatedActor, FAIStimulus Stimu
 			//UE_LOG(LogTemp, Warning, TEXT("Set Actor Location"));
 			TargetPlayer = TemporaryPawn;
 
-			BlackboardComponent->SetValueAsBool("ChasePlayer", true);
-			BlackboardComponent->SetValueAsVector("PlayerPosition", TargetPlayer->GetActorLocation());
-
-
+		
 			if (myEnemyChar->myPatrolType == EEnemyType::ET_BOMBER)
 			{
 				BlackboardComponent->SetValueAsBool("canBomb", true);
+			}
+			else
+			{
+				BlackboardComponent->SetValueAsBool("ChasePlayer", true);
+				BlackboardComponent->SetValueAsVector("PlayerPosition", TargetPlayer->GetActorLocation());
 			}
 			
 		
@@ -201,6 +208,7 @@ void AEnemyAIController::OnSensesUpdated(AActor* UpdatedActor, FAIStimulus Stimu
 	{
 		TargetPlayer = nullptr;
 		BlackboardComponent->ClearValue("ChasePlayer");
+		BlackboardComponent->ClearValue("canBomb");
 	}
 
 	//Stimulus.ReceiverLocation == 

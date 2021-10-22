@@ -314,6 +314,12 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category = "Skills")
 		FSkillEventDispatcher PetSkillEvent;
-	
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+	//damage effect
+	void AddDamageEffect();
+
+	void UpdateDamageEffect();
 };
 

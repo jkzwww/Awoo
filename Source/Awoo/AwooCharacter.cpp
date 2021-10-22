@@ -101,6 +101,7 @@ AAwooCharacter::AAwooCharacter()
 
 	// Uncomment the following line to turn motion controllers on by default:
 	//bUsingMotionControllers = true;
+
 }
 
 void AAwooCharacter::BeginPlay()
@@ -127,6 +128,8 @@ void AAwooCharacter::BeginPlay()
 	health = maxHealth;
 	hunger = maxHunger;
 	hydration = maxHydration;
+
+
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -764,4 +767,15 @@ void AAwooCharacter::ReleaseSkill(ESkillType mySkill)
 void AAwooCharacter::ReceiveDamage(float damageRate)
 {
 	health -= damageRate;
+}
+
+
+void AAwooCharacter::AddDamageEffect()
+{
+
+}
+
+void AAwooCharacter::UpdateDamageEffect()
+{
+
 }
