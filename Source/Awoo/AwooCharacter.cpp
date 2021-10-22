@@ -11,7 +11,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "MotionControllerComponent.h"
 #include "XRMotionControllerBase.h" // for FXRMotionControllerBase::RightHandSourceId
-
+#include "SceneManagement.h"
+#include "SceneInterface.h"
 DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
 
 
@@ -20,6 +21,7 @@ DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
 
 AAwooCharacter::AAwooCharacter()
 {
+
 	//create trigger capsule for pickups
 	TriggerCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Trigger Capusle"));
 	TriggerCapsule->InitCapsuleSize(55.0f, 96.0f);
@@ -50,6 +52,14 @@ AAwooCharacter::AAwooCharacter()
 	FirstPersonCameraComponent->SetupAttachment(GetCapsuleComponent());
 	FirstPersonCameraComponent->SetRelativeLocation(FVector(-39.56f, 1.75f, 64.f)); // Position the camera
 	FirstPersonCameraComponent->bUsePawnControlRotation = true;
+
+	//post process component
+	myDamagePP = CreateDefaultSubobject<UPostProcessComponent>(TEXT("Character Post Process"));
+	myDamagePP->SetupAttachment(FirstPersonCameraComponent);
+	myDamagePP->Settings = PPsettings;
+
+	PPsettings.bOverride_ColorGamma = true;
+	PPsettings.bOverride_VignetteIntensity = true;
 
 	// Create a mesh component that will be used when being viewed from a '1st person' view (when controlling this pawn)
 	Mesh1P = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh1P"));
@@ -129,7 +139,11 @@ void AAwooCharacter::BeginPlay()
 	hunger = maxHunger;
 	hydration = maxHydration;
 
-
+	//default color
+	myBloodColor = FLinearColor::Red;
+	effectSpeed = 5;
+	DesiredGamma = FVector4(1, 1, 1, 1);
+	
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -564,7 +578,8 @@ void AAwooCharacter::Tick(float DeltaTime)
 { 
 	Super::Tick(DeltaTime); 
 
-
+	//drop hunger and hydro by constant rate
+	//call gameover for zero health
 	if (health <= 0)
 	{
 		GameOverEvent.Broadcast(0);
@@ -583,7 +598,7 @@ void AAwooCharacter::Tick(float DeltaTime)
 
 		if (hunger <= 0 || hydration <= 0)
 		{
-			health -= healthDrop;
+			ReceiveDamage(healthDrop);
 		}
 	
 		//contact damage
@@ -594,8 +609,17 @@ void AAwooCharacter::Tick(float DeltaTime)
 
 	}
 
+	myCurrentGamma = FMath::Lerp(myCurrentGamma,DesiredGamma,effectSpeed);
 
+	PPsettings.ColorGamma = myCurrentGamma;
 
+	if (myCurrentGamma.Equals(DesiredGamma,0.01))
+	{
+		DesiredGamma = FVector4(1, 1, 1, 1);
+		effectSpeed = 3;
+		PPsettings.VignetteIntensity = 0;
+	}
+	
 }
 
 
@@ -767,15 +791,11 @@ void AAwooCharacter::ReleaseSkill(ESkillType mySkill)
 void AAwooCharacter::ReceiveDamage(float damageRate)
 {
 	health -= damageRate;
+
+	//start lerping to gamma
+	effectSpeed *= 3;
+	DesiredGamma = FVector4(myBloodColor);
+	PPsettings.VignetteIntensity = 0.8;
 }
 
 
-void AAwooCharacter::AddDamageEffect()
-{
-
-}
-
-void AAwooCharacter::UpdateDamageEffect()
-{
-
-}

@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Components/PostProcessComponent.h"
 #include "EnemyCharacter.h"
 #include "MyTrap.h"
 #include "EndPlatform.h"
@@ -317,9 +318,24 @@ public:
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-	//damage effect
-	void AddDamageEffect();
+	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = Camera)
+		UPostProcessComponent* myDamagePP;
 
-	void UpdateDamageEffect();
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+		struct FPostProcessSettings PPsettings;
+
+	UPROPERTY(EditAnywhere,Category = effect)
+		FLinearColor myBloodColor;
+	
+	UPROPERTY(EditAnywhere, Category = effect)
+		float effectSpeed;
+
+	UPROPERTY(VisibleAnywhere)
+		FVector4 myCurrentGamma;
+		
+	UPROPERTY(VisibleAnywhere)
+		FVector4 DesiredGamma;
+	
+	
 };
 
