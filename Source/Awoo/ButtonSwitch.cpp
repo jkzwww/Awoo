@@ -61,12 +61,22 @@ void AButtonSwitch::ButtonPressed()
 {
 	if (gameChar)
 	{
+		FVector TargetDirection = gameChar->GetActorLocation() - GetActorLocation();
+
+
 		//check whether player is near enough to switch
-		if (FVector::Dist(gameChar->GetActorLocation(), GetActorLocation()) < pushDistance)
+		if (TargetDirection.Size() < pushDistance)
 		{
-			ToggleLightEvent.Broadcast();
-			UE_LOG(LogTemp, Warning, TEXT("Button pressed"));
-			isPressed = !isPressed;
+			TargetDirection.Normalize();
+			float DotProduct = FVector::DotProduct(GetActorForwardVector(), TargetDirection);
+		
+			if(DotProduct > 0.9) //only light up when character is in front
+			{
+				ToggleLightEvent.Broadcast();
+				UE_LOG(LogTemp, Warning, TEXT("Button pressed"));
+				isPressed = !isPressed;
+			}
+		
 		}
 	}
 	

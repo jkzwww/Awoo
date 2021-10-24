@@ -58,6 +58,8 @@ AAwooCharacter::AAwooCharacter()
 	myDamagePP->SetupAttachment(FirstPersonCameraComponent);
 	myDamagePP->Settings = PPsettings;
 
+	FirstPersonCameraComponent->PostProcessSettings = PPsettings;
+
 	PPsettings.bOverride_ColorGamma = true;
 	PPsettings.bOverride_VignetteIntensity = true;
 
@@ -143,7 +145,7 @@ void AAwooCharacter::BeginPlay()
 	myBloodColor = FLinearColor::Red;
 	effectSpeed = 5;
 	DesiredGamma = FVector4(1, 1, 1, 1);
-	
+	myCurrentGamma = DesiredGamma;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -616,7 +618,7 @@ void AAwooCharacter::Tick(float DeltaTime)
 	if (myCurrentGamma.Equals(DesiredGamma,0.01))
 	{
 		DesiredGamma = FVector4(1, 1, 1, 1);
-		effectSpeed = 3;
+		effectSpeed = 0.3;
 		PPsettings.VignetteIntensity = 0;
 	}
 	
@@ -790,12 +792,16 @@ void AAwooCharacter::ReleaseSkill(ESkillType mySkill)
 //get damage
 void AAwooCharacter::ReceiveDamage(float damageRate)
 {
-	health -= damageRate;
+	if (!isProtected)
+	{
+		health -= damageRate;
 
+	}
+	
 	//start lerping to gamma
-	effectSpeed *= 3;
-	DesiredGamma = FVector4(myBloodColor);
-	PPsettings.VignetteIntensity = 0.8;
+	effectSpeed = 0.8;
+	DesiredGamma = FVector4(1,0,0,1);
+	PPsettings.VignetteIntensity = 1.5;
 }
 
 

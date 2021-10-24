@@ -86,6 +86,15 @@ public:
 		UMaterialInterface* Material;
 
 	UMaterialInstanceDynamic* matInstance;
+	
+	UPROPERTY(EditAnywhere,Category = "Appearance")
+		FLinearColor phase1Color;
+
+	UPROPERTY(EditAnywhere, Category = "Appearance")
+		FLinearColor phase2Color;
+	
+	UPROPERTY(EditAnywhere, Category = "Appearance")
+		FLinearColor phase3Color;
 
 protected:
 	// Called when the game starts or when spawned

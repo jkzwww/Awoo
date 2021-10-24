@@ -43,6 +43,16 @@ void APet::BeginPlay()
 		}
 	}
 	
+	//get material
+	Material = BaseMesh->GetMaterial(0);
+	matInstance = BaseMesh->CreateDynamicMaterialInstance(0, Material);
+
+	if (matInstance)
+	{
+		matInstance->SetVectorParameterValue("skinColor", phase1Color);
+	}
+	
+
 }
 
 // Called every frame
@@ -68,6 +78,12 @@ void APet::Tick(float DeltaTime)
 				toTarget *= speed;
 				BaseMesh->SetRelativeLocation(GetActorLocation() + toTarget);
 			}
+			
+			if (matInstance)
+			{
+				matInstance->SetScalarParameterValue("SkillGlow", 0);
+			}
+
 			break;
 
 
@@ -184,7 +200,7 @@ void APet::Interact_Implementation(AActor* target)
 void APet::getFood()
 {
 	
-	if (myFood < 4)
+	if (myFood < 5)
 	{
 		myFood++;
 
@@ -194,9 +210,12 @@ void APet::getFood()
 		case 1:
 			myPhase = EPetPhase::PET_HEALTHY;
 			myOwner->MessageString = FString(TEXT("Pet : I feel better!Charm skill unlocked!"));
-
+			
 			//change material param
-
+			if (matInstance)
+			{
+				matInstance->SetScalarParameterValue("Intensity", 5);
+			}
 			break;
 
 		case 3:
@@ -204,7 +223,10 @@ void APet::getFood()
 			myOwner->MessageString = FString(TEXT("Pet : Yum!!Healing skill unlocked!"));
 
 			//change material param
-
+			if (matInstance)
+			{
+				matInstance->SetVectorParameterValue("skinColor", phase2Color);
+			}
 			break;
 
 		case 5:
@@ -212,7 +234,10 @@ void APet::getFood()
 			myOwner->MessageString = FString(TEXT("Pet : Awoo!!Shield skill unlocked!"));
 
 			//change material param
-
+			if (matInstance)
+			{
+				matInstance->SetVectorParameterValue("skinColor", phase3Color);
+			}
 		default:
 			myOwner->MessageString = FString(TEXT("Pet : woof!"));
 			break;
@@ -249,6 +274,11 @@ void APet::useSkill(int skill)
 			{
 				myState = EPetState::PET_ATTRACT;
 				myOwner->MessageString = FString(TEXT("They'll come for me when you're seen now!"));
+				if (matInstance)
+				{
+					matInstance->SetScalarParameterValue("SkillGlow", 1);
+				}
+
 	
 			}
 
@@ -263,6 +293,10 @@ void APet::useSkill(int skill)
 			{
 				myState = EPetState::PET_HEAL;
 				myOwner->MessageString = FString(TEXT("Don't worry, I'll give you my power!"));
+				if (matInstance)
+				{
+					matInstance->SetScalarParameterValue("SkillGlow", 1);
+				}
 			}
 
 			break;
@@ -275,6 +309,10 @@ void APet::useSkill(int skill)
 			{
 				myState = EPetState::PET_SHIELD;
 				myOwner->MessageString = FString(TEXT("Go ahead,you're under my shield!"));
+				if (matInstance)
+				{
+					matInstance->SetScalarParameterValue("SkillGlow", 1);
+				}
 			}
 
 			break;
