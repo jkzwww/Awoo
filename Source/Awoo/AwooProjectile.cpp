@@ -3,6 +3,7 @@
 #include "AwooProjectile.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Components/SphereComponent.h"
+#include "EnemyCharacter.h"
 
 AAwooProjectile::AAwooProjectile() 
 {
@@ -34,9 +35,21 @@ AAwooProjectile::AAwooProjectile()
 void AAwooProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
 	// Only add impulse and destroy projectile if we hit a physics
-	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr) && OtherComp->IsSimulatingPhysics())
+	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))// && OtherComp->IsSimulatingPhysics())
 	{
-		OtherComp->AddImpulseAtLocation(GetVelocity() * 100.0f, GetActorLocation());
+		//OtherComp->AddImpulseAtLocation(GetVelocity() * 100.0f, GetActorLocation());
+
+		AEnemyCharacter* enemy = Cast<AEnemyCharacter>(OtherActor);
+
+		if (enemy)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("bullet hit enemy!!"));
+			enemy->TakeDamage(10.f);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("bullet didnt hit enemy"));
+		}
 
 		Destroy();
 	}

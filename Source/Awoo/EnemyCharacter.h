@@ -12,6 +12,8 @@
 #include "EnemyCharacter.generated.h"
 
 class APet;
+class UAnimMontage;
+class USkeletalMeshComponent;
 
 UENUM(BlueprintType)
 enum class EEnemyType : uint8 {
@@ -33,12 +35,28 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	//health
+	float HP;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	/** AnimMontage to play when dead */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+		UAnimMontage* DeadAnimation;
+
+	//materials
+	UPROPERTY(EditAnywhere, Category = "Material")
+		UMaterialInterface* Material;
+
+	UMaterialInstanceDynamic* matInstance;
+
+	UPROPERTY(EditAnywhere, Category = "Health")
+		float MaxHealth;
 
 	UPROPERTY(EditAnywhere, Category = "Patrol")
 		EEnemyType myPatrolType;
@@ -84,6 +102,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void updateCharmStat(bool petCharm,FVector newLoc);
 
+	//bomb attack
 	void BombPlayer(AActor* targetPlayer);
 
+	//take damage
+	void TakeDamage(float damageVal);
 };

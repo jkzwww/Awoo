@@ -10,17 +10,18 @@ ALaser::ALaser()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root Component"));
+	//RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root Component"));
 	VisibleComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Visible Component"));
-	VisibleComponent->SetupAttachment(RootComponent);
-	
+	//VisibleComponent->SetupAttachment(RootComponent);
+	RootComponent = VisibleComponent;
+
 	VisibleComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	NLaser = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Niagara laser component"));
-	NLaser->SetupAttachment(RootComponent);
+	NLaser->SetupAttachment(VisibleComponent);
 
 	NLaserImpact = CreateDefaultSubobject<UNiagaraComponent>(TEXT("laser impact component"));
-	NLaserImpact->SetupAttachment(RootComponent);
+	NLaserImpact->SetupAttachment(VisibleComponent);
 
 	//default
 	RotationSpeed = 20;

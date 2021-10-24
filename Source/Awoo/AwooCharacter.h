@@ -297,7 +297,8 @@ public:
 	void ReleaseSkill() { ReleaseSkill(mySkill); }
 
 	//damage related
-	void ReceiveDamage(float damageRate);
+	UFUNCTION(BlueprintCallable)
+		void ReceiveDamage(float damageRate);
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~event~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

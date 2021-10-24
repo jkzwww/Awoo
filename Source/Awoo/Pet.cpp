@@ -66,10 +66,8 @@ void APet::Tick(float DeltaTime)
 
 	if (myOwner)
 	{
-		switch (myState)
+		if (myState != EPetState::PET_ATTRACT)
 		{
-		case EPetState::PET_FOLLOW:
-
 			//if not too close , follow up
 			if (FVector::Dist(myOwner->GetActorLocation(), GetActorLocation()) > followDist)
 			{
@@ -78,6 +76,11 @@ void APet::Tick(float DeltaTime)
 				toTarget *= speed;
 				BaseMesh->SetRelativeLocation(GetActorLocation() + toTarget);
 			}
+		}
+
+		switch (myState)
+		{
+		case EPetState::PET_FOLLOW:
 			
 			if (matInstance)
 			{

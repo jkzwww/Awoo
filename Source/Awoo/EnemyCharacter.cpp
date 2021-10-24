@@ -3,6 +3,7 @@
 
 #include "EnemyCharacter.h"
 #include "Pet.h"
+#include "Animation/AnimInstance.h"
 
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()
@@ -16,6 +17,7 @@ AEnemyCharacter::AEnemyCharacter()
 	GetMesh()->SetCollisionProfileName(TEXT("Trigger"));
 	
 	//default values
+	MaxHealth = 200;
 	patrolIndex = 0;
 	ChaseSpeedModifier = 0.8;
 	DamageValue = 0.5;
@@ -31,6 +33,8 @@ void AEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	HP = MaxHealth;
+
 	//get player and its walk speed
 	ACharacter* player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 
@@ -72,6 +76,10 @@ void AEnemyCharacter::BeginPlay()
 		UE_LOG(LogTemp, Warning, TEXT("charm event bound!!"));
 	}
 
+	//get material
+	Material = GetMesh()->GetMaterial(0);
+	matInstance = GetMesh()->CreateDynamicMaterialInstance(0, Material);
+
 
 }
 
@@ -83,15 +91,43 @@ void AEnemyCharacter::Tick(float DeltaTime)
 	//update current second
 	currentSec = GetWorld()->UWorld::GetRealTimeSeconds();
 
+	//track stun effect time
 	if (isStun)
-	{
-		
+	{		
 		if (currentSec - stunStartSec > myStunTime)
 		{
 			isStun = false;
 		}
 	}
+
+	//set material param
+	if (matInstance)
+	{
+		matInstance->SetScalarParameterValue("HPpercent", HP / MaxHealth);
+	}
 	
+	if (HP <= 0)
+	{
+	/*	if (DeadAnimation)
+		{
+			USkeletalMeshComponent* skeletonMesh = FindComponentByClass<USkeletalMeshComponent>();
+
+			if (skeletonMesh)
+			{
+				UAnimInstance* AnimInstance = skeletonMesh->GetAnimInstance();
+
+				if (AnimInstance)
+				{
+					AnimInstance->Montage_Play(DeadAnimation, 1.f);
+				}
+
+			}
+
+		}*/
+	
+		Destroy();
+	}
+
 }
 
 // Called to bind functionality to input
@@ -152,4 +188,10 @@ void AEnemyCharacter::BombPlayer(AActor* targetPlayer)
 
 		
 	}
+}
+
+
+void AEnemyCharacter::TakeDamage(float damageVal)
+{
+	HP -= damageVal;
 }

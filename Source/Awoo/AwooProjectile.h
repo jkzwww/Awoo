@@ -8,6 +8,7 @@
 
 class USphereComponent;
 class UProjectileMovementComponent;
+class AEnemyCharacter;
 
 UCLASS(config=Game)
 class AAwooProjectile : public AActor
