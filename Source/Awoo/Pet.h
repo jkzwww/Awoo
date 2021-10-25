@@ -65,6 +65,10 @@ public:
 	UPROPERTY(EditAnywhere)
 		float skillTime;
 
+	//skill ready
+	UPROPERTY(VisibleAnywhere,BlueprintReadWrite)
+		bool skillReady;
+
 	//follow speed
 	UPROPERTY(EditAnywhere)
 		float speed;

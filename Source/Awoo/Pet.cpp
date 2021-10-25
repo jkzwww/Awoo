@@ -163,7 +163,11 @@ void APet::Tick(float DeltaTime)
 	//update HUD
 	if (currentSec - startSec > skillCD)
 	{
-
+		skillReady = true;
+	}
+	else
+	{
+		skillReady = false;
 	}
 
 }
@@ -189,10 +193,6 @@ void APet::Interact_Implementation(AActor* target)
 
 			//bind skill events
 			myOwner->PetSkillEvent.AddDynamic(this, &APet::useSkill);
-		}
-		else
-		{
-			gameChar->MessageString = FString(TEXT(""));
 		}
 
 	}

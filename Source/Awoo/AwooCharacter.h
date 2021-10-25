@@ -229,7 +229,8 @@ public:
 		int InvSlotsNum;
 
 	//my pet
-	APet* myPet;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Pet")
+		APet* myPet;
 
 	//shield
 	bool isProtected;
