@@ -263,7 +263,7 @@ void APet::useSkill(int skill)
 	}
 	else
 	{
-		startSec = currentSec;
+		
 
 		//check phase
 		switch (skill)
@@ -282,7 +282,7 @@ void APet::useSkill(int skill)
 					matInstance->SetScalarParameterValue("SkillGlow", 1);
 				}
 
-	
+				startSec = currentSec;
 			}
 
 			break;
@@ -300,6 +300,8 @@ void APet::useSkill(int skill)
 				{
 					matInstance->SetScalarParameterValue("SkillGlow", 1);
 				}
+
+				startSec = currentSec;
 			}
 
 			break;
@@ -316,6 +318,8 @@ void APet::useSkill(int skill)
 				{
 					matInstance->SetScalarParameterValue("SkillGlow", 1);
 				}
+
+				startSec = currentSec;
 			}
 
 			break;

@@ -7,7 +7,7 @@
 #include "GameFramework/Actor.h"
 #include "Journal.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FNoteEventDispatcher);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FNoteEventDispatcher,FString,myEntry);
 
 UCLASS()
 class AWOO_API AJournal : public AActor, public IInteractable

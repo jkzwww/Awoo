@@ -52,7 +52,8 @@ public:
 	EPetState myState;
 
 	//growth phase
-	EPetPhase myPhase;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+		EPetPhase myPhase;
 
 	//food
 	int myFood;

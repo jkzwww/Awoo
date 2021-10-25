@@ -31,5 +31,5 @@ void AJournal::Tick(float DeltaTime)
 
 void AJournal::Interact_Implementation(AActor* target)
 {
-	ReadEvent.Broadcast();
+	ReadEvent.Broadcast(Entry);
 }
