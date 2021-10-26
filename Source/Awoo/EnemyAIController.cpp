@@ -67,7 +67,7 @@ void AEnemyAIController::Tick(float DeltaSeconds)
 	if (TargetPlayer)
 	{
 		BlackboardComponent->SetValueAsVector("PlayerPosition", TargetPlayer->GetActorLocation());	
-		UE_LOG(LogTemp, Warning, TEXT("player position updated!!"));
+		//UE_LOG(LogTemp, Warning, TEXT("player position updated!!"));
 
 	}
 	
@@ -182,13 +182,17 @@ void AEnemyAIController::OnSensesUpdated(AActor* UpdatedActor, FAIStimulus Stimu
 		{
 			//UE_LOG(LogTemp, Warning, TEXT("Set Actor Location"));
 			TargetPlayer = TemporaryPawn;
-			BlackboardComponent->SetValueAsBool("ChasePlayer", true);
-			BlackboardComponent->SetValueAsVector("PlayerPosition", TargetPlayer->GetActorLocation());
-		
+			
 			if (myEnemyChar->myPatrolType == EEnemyType::ET_BOMBER)
 			{
 				BlackboardComponent->SetValueAsBool("canBomb", true);
-			}			
+			}
+			else
+			{
+				BlackboardComponent->SetValueAsBool("ChasePlayer", true);
+				BlackboardComponent->SetValueAsVector("PlayerPosition", TargetPlayer->GetActorLocation());
+
+			}
 		
 			/*if (Stimulus.Type == sightid)
 			{
