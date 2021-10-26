@@ -55,7 +55,7 @@ AAwooCharacter::AAwooCharacter()
 
 	//post process component
 	myDamagePP = CreateDefaultSubobject<UPostProcessComponent>(TEXT("Character Post Process"));
-	myDamagePP->SetupAttachment(FirstPersonCameraComponent);
+	myDamagePP->SetupAttachment(TriggerCapsule);
 	myDamagePP->Settings = PPsettings;
 
 	FirstPersonCameraComponent->PostProcessSettings = PPsettings;
