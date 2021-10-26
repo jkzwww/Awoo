@@ -23,6 +23,7 @@ Extra features:
 - laser niagara system which use line tracing and deal damage when player lasered.
 - drone actors that patrol and spawn particles and deal damage when player is beneath them.
 - bomber AI that send timed bombs to player as attack task.
+- journal actors that can be interacted to show content providing clue for binary code.
 
 Bugged features:
 - dynamic post process not working, attempted with attaching post process component
