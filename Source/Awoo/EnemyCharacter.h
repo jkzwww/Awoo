@@ -73,6 +73,10 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Attack")
 		float DamageValue;
 
+	//distance to lose sight
+	UPROPERTY(EditAnywhere, Category = "Attack")
+		float LostDistance;
+
 	//bomb class to spawn
 	UPROPERTY(EditAnywhere, Category = "Attack")
 		TSubclassOf<class ABomb> ToSpawn;

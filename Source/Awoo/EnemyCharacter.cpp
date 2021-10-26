@@ -21,7 +21,8 @@ AEnemyCharacter::AEnemyCharacter()
 	patrolIndex = 0;
 	ChaseSpeedModifier = 0.8;
 	DamageValue = 0.5;
-	
+	LostDistance = 800;
+
 	isStun = false;
 	stunStartSec = 0;
 

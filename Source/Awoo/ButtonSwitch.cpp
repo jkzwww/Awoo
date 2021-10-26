@@ -17,6 +17,7 @@ AButtonSwitch::AButtonSwitch()
 	isMyEventBound = false;
 	isPressed = false;
 	pushDistance = 400;
+	DProduct = 0.5;
 }
 
 // Called when the game starts or when spawned
@@ -70,7 +71,7 @@ void AButtonSwitch::ButtonPressed()
 			TargetDirection.Normalize();
 			float DotProduct = FVector::DotProduct(GetActorForwardVector(), TargetDirection);
 		
-			if(DotProduct > 0.9) //only light up when character is in front
+			if(DotProduct > DProduct) //only light up when character is in front
 			{
 				ToggleLightEvent.Broadcast();
 				UE_LOG(LogTemp, Warning, TEXT("Button pressed"));

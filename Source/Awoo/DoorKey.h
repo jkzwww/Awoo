@@ -36,6 +36,8 @@ public:
 	UPROPERTY(EditAnywhere)
 		FVector LockLoc;
 
+	UPROPERTY(EditAnywhere)
+		float UnlockDist;
 	//materials
 	UPROPERTY(EditAnywhere)
 		UMaterialInterface* Material;

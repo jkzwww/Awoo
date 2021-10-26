@@ -14,7 +14,7 @@ ADoorKey::ADoorKey()
 	ItemName = FString(TEXT("Key"));
 	ItemDesc = FString(TEXT("An old and rusty key\nmight be useful for a lock somewhere"));
 
-
+	UnlockDist = 500;
 }
 
 // Called when the game starts or when spawned
@@ -48,7 +48,7 @@ void ADoorKey::UseItem()
 	//check if game character is near enough switch
 	if (gameChar)
 	{
-		if (FVector::Dist(gameChar->GetActorLocation(), LockLoc) < 500)
+		if (FVector::Dist(gameChar->GetActorLocation(), LockLoc) < UnlockDist)
 		{
 			//call key event binded to unlock event of door
 			UnlockEvent.Broadcast();
