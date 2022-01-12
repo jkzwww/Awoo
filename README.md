@@ -1,6 +1,3 @@
-FIT2097 assignment 3
-
-Name: Zhi Wei Loh   ID: 31123074
 
 How to play: 
 - Reach the goal without dying (health turns 0) by avoiding enemies and consuming boost items
@@ -9,8 +6,7 @@ How to play:
 and deal damage when touched or bomb player.
 - May rescue pet which can be upgraded and release useful skills to deal with enemies.
 
-Working features:
-- both previos assignment requirements and current assignment requirements are implemented
+Main Features:
 - switches including locks, flip switch , binary code , powerbox
 - dynamic materials and niagara system.
 - enemy AIs including a guardian ( patrol around constant path) and seeker which wanders around
@@ -26,11 +22,4 @@ Extra features:
 - enemies has HP which can be damage through projectiles, but HP are high to encourage stealth.
 - journal actors that can be interacted to show content providing clue for binary code.
 
-Bugged features:
-- dynamic post process not working, attempted with attaching post process component
-and lerping to desired values with custom postprocess settings in C++.
-- Laser actor in C++ has exact code with BP_Laser blueprint version, but niagara system
-do not activate on spawn.
-
-Demonstration video link:
 
